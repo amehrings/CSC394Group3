@@ -5,11 +5,13 @@ import { AngularFireModule } from 'angularfire2';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
