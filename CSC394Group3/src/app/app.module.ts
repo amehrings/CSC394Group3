@@ -17,6 +17,7 @@ import { UserService } from './core/user.service';
 import { UserResolver } from './user/user.resolver';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule} from './material.module';
+import { NavComponent } from './nav/nav.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MaterialModule} from './material.module';
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
