@@ -9,7 +9,7 @@
       <input type="password" formControlName="password">
       <label class="error">{{errorMessage}}</label>
     </div>
-    <button type="submit" (click)="tryLogin(loginForm.value)">Login</button>
+    <button mat-button type="submit" (click)="tryLogin(loginForm.value)">Login</button>
   </form>
   <div>
     <p>No account yet? <a href="/register">Create an account</a></p>

@@ -15,7 +15,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './core/auth.service';
 import { UserService } from './core/user.service';
 import { UserResolver } from './user/user.resolver';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule} from './material.module';
 
 
 @NgModule({
@@ -32,7 +33,10 @@ import { UserResolver } from './user/user.resolver';
     AppRouterModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    BrowserAnimationsModule,
+    MaterialModule
+
   ],
   providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard],
   bootstrap: [AppComponent]
