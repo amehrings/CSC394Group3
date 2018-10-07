@@ -18,13 +18,13 @@ export class NavComponent implements OnInit {
     private location: Location,
 ) { }
 
-logout() {
-    this.authService.doLogout()
-      .then((res)) => {
+logout(){
+  this.authService.doLogout()
+    .then((res) => {
       this.location.back();
-  }, (error) => {
-      console.log('Logout error', error);
-  });
+    }, (error) => {
+      console.log("Logout error", error);
+    });
 }
   ngOnInit() {
   }
