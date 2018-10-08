@@ -63,8 +63,15 @@ export class AuthService {
       }
     }
     const userRef: AngularFirestoreDocument<any> = this.afs.doc('users/' + user.userId);
+
     const userData: User = user;
+
+    /*var data = {
+      skills: []
+    };*/
     
+    // this.afs.collection('skills').doc('myskills').set(data);
+
     return userRef.set(userData, { merge: true})
   }
 

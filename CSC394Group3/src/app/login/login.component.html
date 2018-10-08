@@ -1,16 +1,20 @@
-<h1 class="header">LOGIN HERE</h1>
-  <form [formGroup]="loginForm">
-    <div>
-      <label>Email address</label>
-      <input type="email" formControlName="email">
-    </div>
-    <div>
-      <label>Password</label>
-      <input type="password" formControlName="password">
-      <label class="error">{{errorMessage}}</label>
-    </div>
-    <button mat-button type="submit" (click)="tryLogin(loginForm.value)">Login</button>
-  </form>
-  <div>
-    <p>No account yet? <a href="/register">Create an account</a></p>
-  </div>
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="loginForm">
+        <p>Login to continue</p>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="email" formControlName="email" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="password" formControlName="password" required>
+          <label class="mat-error">{{errorMessage}}</label>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button type="submit" (click)="tryLogin(loginForm.value)">Login</button>
+        <p>No account yet? <a href="/register">Create an account</a></p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

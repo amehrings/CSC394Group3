@@ -1,11 +1,9 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>MyMaterial</span>
-
-    <span class="example-spacer"></span>
-
-    <button mat-button>About</button>
-    <button mat-button>Services</button>
-    <button mat-button>Contact</button>
+    <h1>Job Matcher</h1>
+    <button mat-button>Home</button>
+    <button mat-button routerLink="/user">Profile</button>
+    <button mat-button routerLink="/login">Login</button>
+    <button mat-button (click)="logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
