@@ -6,6 +6,11 @@
   <div>
     <label>Password</label>
     <input type="password" formControlName="password" required>
+    <ul>
+      <li *ngFor="let item of degrees">
+        <input name="collegeDegree" type="radio" formControlName="degree"> {{item}}
+      </li>
+    </ul>
     <label class="error">{{errorMessage}}</label>
     <label class="success">{{successMessage}}</label>
   </div>
