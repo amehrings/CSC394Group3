@@ -1,8 +1,10 @@
 mat-card{
   max-width: 400px;
-  margin: 2em auto;
+  //margin: 2em auto;
   text-align: center;
   align-self: right;
+  float: right;
+  margin-top: -20px;
 }
 
 .signin-content{
@@ -19,5 +21,10 @@ img{
 }
 
 .welcomeText{
+  margin-top: 50px;
+  margin-left: 225px;
+  width: 375px;
+  float: left;
   font-size: 20px;
+  padding-bottom: 225px;
 }
