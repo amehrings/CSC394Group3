@@ -1,9 +1,10 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <mat-toolbar-row>
-    <h1>Job Matcher</h1>
-    <button mat-button>Home</button>
-    <button mat-button routerLink="/user">Profile</button>
-    <button mat-button routerLink="/login">Login</button>
-    <button mat-button (click)="logout()">Logout</button>
+    <span>Job Matcher</span>
+    <span class="nav-buttons"></span>
+      <button mat-button>Home</button>
+      <button mat-button routerLink="/user">Profile</button>
+      <button mat-button routerLink="/login">Login</button>
+      <button mat-stroked-button color="primary" (click)="logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>

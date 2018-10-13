@@ -44,7 +44,7 @@ export class AuthService {
   doLogout(){
     return new Promise((resolve, reject) => {
       if(firebase.auth().currentUser){
-        this.afAuth.auth.signOut()
+        this.afAuth.auth.signOut();
         resolve();
       }
       else{
@@ -63,7 +63,8 @@ export class AuthService {
       }
     }
     const userRef: AngularFirestoreDocument<any> = this.afs.doc('users/' + user.userId);
-    const userData: User = user
+
+    const userData: User = user;
 
     /*var data = {
       skills: []
@@ -85,17 +86,17 @@ export class AuthService {
   }
 
   canRead(user: User): boolean {
-    const allowed = ['admin', 'faculty', 'student']
+    const allowed = ['admin', 'faculty', 'student'];
     return this.checkAuthorization(user, allowed)
   }
 
   canEdit(user: User): boolean {
-    const allowed = ['admin', 'faculty', 'student']
+    const allowed = ['admin', 'faculty', 'student'];
     return this.checkAuthorization(user, allowed)
   }
 
   canDelete(user: User): boolean {
-    const allowed = ['admin', 'faculty', 'student']
+    const allowed = ['admin', 'faculty', 'student'];
     return this.checkAuthorization(user, allowed)
   }
 
