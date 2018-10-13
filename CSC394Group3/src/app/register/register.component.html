@@ -20,7 +20,7 @@
 
       <ul>
         <li *ngFor="let item of degrees">
-          <input name="collegeDegree" type="radio" formControlName="degree"> {{item}}
+          <input type="radio" formControlName="degree" value={{item}}> {{item}}
         </li>
       </ul>
     </form>
