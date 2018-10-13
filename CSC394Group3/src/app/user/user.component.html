@@ -1,15 +1,29 @@
 <div>
-  <img src="user.image">
+  <br>
   <div *ngIf='user.provider != "password"'>
     <h4 class="card-title">{{user.name}}</h4>
   </div>
   <div *ngIf='user.provider == "password"'>
-    <form [formGroup]="profileForm">
+      
+    <h1>Skills Search</h1>
+    <input type="text" [(ngModel)]="searchterm" (keydown)="search($event)">  
+    <ul *ngFor="let skill of searchSkills">
+      <li>{{skill}}</li>
+    </ul>
+      
+    <div *ngIf="skills?.length < 1">
+      <hr>
+      <p>
+        No results found :(
+      </p>
+    </div>
+    <!-- <form [formGroup]="profileForm">
       <div class="form-group">
         <label>Your name</label>
           <input type="text" formControlName="name" required>
       </div>
-    </form>
-    <a (click)="save(profileForm.value)" class="btn btn-primary">Save</a>
+    </form> -->
+    <br>
+    <button mat-raised-button (click)="save(profileForm.value)">Save</button>
   </div>
 </div>

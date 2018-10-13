@@ -18,6 +18,7 @@ import { UserResolver } from './user/user.resolver';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule} from './material.module';
 import { NavComponent } from './nav/nav.component';
+import { skillsSearchService } from './skills-search.service';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { NavComponent } from './nav/nav.component';
     RegisterComponent,
     LoginComponent,
     UserComponent,
-    NavComponent
+    NavComponent  
   ],
   imports: [
     BrowserModule,
@@ -38,9 +39,8 @@ import { NavComponent } from './nav/nav.component';
     AngularFireAuthModule,
     BrowserAnimationsModule,
     MaterialModule
-
   ],
-  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard],
+  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
