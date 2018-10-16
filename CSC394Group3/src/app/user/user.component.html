@@ -1,29 +1,38 @@
+<img src="https://img3.stockfresh.com/files/k/kurhan/m/15/392402_stock-photo-business-handshake.jpg" alt="JobMatcher">
+
 <div>
   <br>
   <div *ngIf='user.provider != "password"'>
     <h4 class="card-title">{{user.name}}</h4>
   </div>
   <div *ngIf='user.provider == "password"'>
-      
-    <h1>Skills Search</h1>
-    <input type="text" [(ngModel)]="searchterm" (keydown)="search($event)">  
-    <ul *ngFor="let skill of searchSkills">
-      <li>{{skill}}</li>
-    </ul>
-      
-    <div *ngIf="skills?.length < 1">
-      <hr>
-      <p>
-        No results found :(
-      </p>
-    </div>
-    <!-- <form [formGroup]="profileForm">
-      <div class="form-group">
-        <label>Your name</label>
-          <input type="text" formControlName="name" required>
+    <div class="skillSearch">
+      <h1>Skills Search</h1>
+      <input class="searchBar" type="text" [(ngModel)]="searchterm" (keydown)="search($event)">
+      <mat-selection-list>
+        <mat-list-option *ngFor="let skill of searchSkills">
+          {{skill}}
+        </mat-list-option>
+      </mat-selection-list>
+
+      <!-- <ul *ngFor="let skill of searchSkills">
+        <li>{{skill}}</li>
+      </ul> -->
+
+      <div *ngIf="skills?.length < 1">
+        <hr>
+        <p>
+          No results found :(
+       </p>
       </div>
-    </form> -->
-    <br>
-    <button mat-raised-button (click)="save(profileForm.value)">Save</button>
+      <!-- <form [formGroup]="profileForm">
+        <div class="form-group">
+          <label>Your name</label>
+            <input type="text" formControlName="name" required>
+        </div>
+      </form> -->
+      <br>
+      <button mat-raised-button (click)="save(profileForm.value)">Save</button>
+    </div>
   </div>
 </div>

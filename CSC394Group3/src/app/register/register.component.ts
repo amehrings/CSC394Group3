@@ -3,7 +3,7 @@ import { AuthService } from '../core/auth.service'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {Observable} from "rxjs";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',

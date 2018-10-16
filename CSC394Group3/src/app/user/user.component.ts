@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { skillsSearchService } from '../skills-search.service';
-import { Subject } from 'rxjs/Subject'
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
 
 
@@ -19,8 +19,8 @@ import { Observable } from 'rxjs/Rx';
 export class UserComponent implements OnInit{
 
   skills: any[];
-  startAt= new Subject();
-  endAt= new Subject();
+  startAt = new Subject();
+  endAt = new Subject();
   searchSkills: any
   result: String;
 
@@ -29,9 +29,6 @@ export class UserComponent implements OnInit{
 
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
-  
-
-  
 
   constructor(
     public userService: UserService,
@@ -51,11 +48,11 @@ export class UserComponent implements OnInit{
         Observable.combineLatest(this.startobs, this.endobs).subscribe((value) => {
           this.skillsService.getSkills().subscribe((skills) => {
             this.skills = skills[0].skills;
-          })
+          });
         })
         this.createForm(this.user.name);
       }
-    })
+    });
   }
 
   search($event) {
@@ -76,11 +73,11 @@ export class UserComponent implements OnInit{
     });
   }
 
-  save(value){
+  save(value) {
     this.userService.updateCurrentUser(value)
     .then(res => {
       console.log(res);
-    }, err => console.log(err))
+    }, err => console.log(err));
   }
 
   logout(){
