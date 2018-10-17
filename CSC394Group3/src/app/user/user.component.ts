@@ -8,6 +8,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { skillsSearchService } from '../skills-search.service';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
+import { MatListOption } from '@angular/material/list';
+import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase/app';
 
 
 @Component({
@@ -21,11 +24,8 @@ export class UserComponent implements OnInit{
   skills: any[];
   startAt = new Subject();
   endAt = new Subject();
-  searchSkills: any
+  searchSkills: any[];
   result: String;
-
-  startobs = this.startAt.asObservable();
-  endobs = this.endAt.asObservable();
 
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
@@ -36,7 +36,8 @@ export class UserComponent implements OnInit{
     private route: ActivatedRoute,
     private location: Location,
     private form: FormBuilder,
-    private skillsService: skillsSearchService
+    private skillsService: skillsSearchService,
+    private afs: AngularFirestore
   ) {
   }
 
@@ -45,26 +46,31 @@ export class UserComponent implements OnInit{
       let data = routeData['data'];
       if (data) {
         this.user = data;
-        Observable.combineLatest(this.startobs, this.endobs).subscribe((value) => {
-          this.skillsService.getSkills().subscribe((skills) => {
-            this.skills = skills[0].skills;
-          });
-        })
+        this.skillsService.getSkills().subscribe((skills) => {
+          this.skills = skills[0].skills;
+        });
+        
         this.createForm(this.user.name);
       }
     });
   }
 
   search($event) {
-    let q = $event.target.value
+    let q = $event.target.value.toLowerCase()
+    console.log(q)
     this.startAt.next(q);
     this.endAt.next(q+"\uf8ff");
 
-    this.searchSkills = this.skills.filter(
-      skills => skills.indexOf(q) !== -1
-    )
-    console.log(q)
+    this.searchSkills = this.skills.filter(skills=> skills.indexOf(q) !== -1);
+    
   }
+
+  selectionChange(option: MatListOption) {
+    
+    if(option.selected == true){     
+      this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
+    }    
+ }
 
 
   createForm(name) {
