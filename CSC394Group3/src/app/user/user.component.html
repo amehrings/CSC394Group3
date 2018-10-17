@@ -32,7 +32,17 @@
         </div>
       </form> -->
       <br>
-      <button mat-raised-button (click)="save(profileForm.value)">Save</button>
+      <button mat-raised-button (click)="save(profileForm.value)">Random button</button>  
     </div>
+    <div class= "yourSkills">
+      <h1>Your Skills</h1>
+      <mat-list>
+        <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
+          {{skill}}
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    
   </div>
 </div>

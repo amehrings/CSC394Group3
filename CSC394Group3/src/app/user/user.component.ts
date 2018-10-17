@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { skillsSearchService } from '../skills-search.service';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
-import { MatListOption } from '@angular/material/list';
+import { MatListOption} from '@angular/material/list';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 
@@ -25,6 +25,7 @@ export class UserComponent implements OnInit{
   startAt = new Subject();
   endAt = new Subject();
   searchSkills: any[];
+  dbSkills: any[];
   result: String;
 
   user: FirebaseUserModel = new FirebaseUserModel();
@@ -49,10 +50,21 @@ export class UserComponent implements OnInit{
         this.skillsService.getSkills().subscribe((skills) => {
           this.skills = skills[0].skills;
         });
-        
+        this.dbSkills = this.getUserSkills()
+        console.log(this.dbSkills)
         this.createForm(this.user.name);
       }
     });
+  }
+  
+  getUserSkills(): any[] {
+    const firestore = firebase.firestore();
+    firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(doc => {
+      this.dbSkills = doc.data().skills
+    }).catch(function(error) {
+      return null;
+    })
+    return [];
   }
 
   search($event) {
@@ -66,9 +78,9 @@ export class UserComponent implements OnInit{
   }
 
   selectionChange(option: MatListOption) {
-    
     if(option.selected == true){     
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
+      this.getUserSkills()
     }    
  }
 

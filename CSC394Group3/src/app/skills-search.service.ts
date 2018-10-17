@@ -7,6 +7,7 @@ import 'firebase/firestore';
 
 @Injectable()
 export class skillsSearchService {
+  dbSkills: any[];
 
   constructor(private db: AngularFirestore) { }
 
@@ -18,6 +19,15 @@ export class skillsSearchService {
     //return this.db.collection('skills', ref => ref.limit(10).orderBy('skills').startAt(start).endAt(end)).valueChanges();
     return this.db.collection<any>('/skills', ref => 
     ref).valueChanges();
+  }
+
+  getUserSkills(): any[] {
+    const firestore = firebase.firestore();
+    var db = firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(function(doc) {
+      console.log(doc.data().skills)
+      this.dbSkills= doc.data().skills
+    })
+    return this.dbSkills;
   }
 
 }
