@@ -42,7 +42,6 @@ export class UserComponent implements OnInit{
       if (data) {
         this.user = data;
         this.dbSkills = this.getUserSkills()
-        console.log(this.dbSkills)
         this.createForm(this.user.name);
       }
     });
@@ -58,18 +57,15 @@ export class UserComponent implements OnInit{
     return [];
   }
 
+  getName(){
+    return firebase.auth().currentUser.displayName
+  }
+
   createForm(name) {
     this.profileForm = this.form.group({
       name: [name, Validators.required ]
     });
   }
-
-  // save(value) {
-  //   this.userService.updateCurrentUser(value)
-  //   .then(res => {
-  //     console.log(res);
-  //   }, err => console.log(err));
-  // }
 
   openSearchDialog() {
     const dialogRef = this.dialog.open(DialogSearchComponent, {
@@ -90,4 +86,15 @@ export class UserComponent implements OnInit{
       console.log("Logout error", error);
     });
   }
+
+  starHandler(skill: String, num: Number){
+    console.log(skill)
+    console.log(num)
+  }
+  // save(value) {
+  //   this.userService.updateCurrentUser(value)
+  //   .then(res => {
+  //     console.log(res);
+  //   }, err => console.log(err));
+  // }
 }

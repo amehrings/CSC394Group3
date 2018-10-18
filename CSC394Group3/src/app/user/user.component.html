@@ -1,5 +1,5 @@
 <img src="https://img3.stockfresh.com/files/k/kurhan/m/15/392402_stock-photo-business-handshake.jpg" alt="JobMatcher">
-
+<h1>Welcome back, {{getName()}}</h1>
 <div>
   <br>
   <div *ngIf='user.provider != "password"'>
@@ -10,19 +10,38 @@
     <div class= "yourSkills">
       <mat-tab-group>
         <mat-tab label="Skills">
-            <mat-list class = "scrollable">
-                <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
-                  {{skill}}
-                  <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-                </mat-list-item>
-              </mat-list>
+          <mat-list class = "scrollable">
+            <div class = "row">
+                <div class="column">
+                  <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
+                    {{skill}}
+                    <mat-divider [inset]="true"></mat-divider>
+                  </mat-list-item>
+                </div>
+                <div class="column2">
+                  <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
+                    <fieldset class="rating">
+                        <ng-container  *ngFor="let num of [5, 4, 3, 2, 1]">
+                            <input (click)="starHandler(skill, num)" 
+                                  [id]="skill+'star'+num"
+                                  [value]="num"
+                                  name={{skill}} 
+                                  type="radio" />                              
+                            <label class="full" [for]="skill+'star'+num"></label>
+                        </ng-container>
+                    </fieldset>
+                    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                  </mat-list-item>
+                </div>
+              </div>
+          </mat-list>
         </mat-tab>
         <mat-tab label="Classes">
           <mat-list class = "scrollable">
             Class List here
           </mat-list>
         </mat-tab>
-      </mat-tab-group>
+    </mat-tab-group>
       
       <button mat-stroked-button class= "skillsButton" (click)="openSearchDialog()">+ More...</button>  
 

@@ -22,6 +22,8 @@ import { skillsSearchService } from './skills-search.service';
 import { DialogSearchComponent } from './dialog-search/dialog-search.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,

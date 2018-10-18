@@ -1,8 +1,10 @@
+
+
 .yourSkills{
   float: right;
-  margin-right: 200px;
-  margin-top: -400px;
-  width: 400px;
+  margin-right: 250px;
+  margin-top: -500px;
+  width: 700px;
 
 }
 h1{
@@ -19,9 +21,53 @@ h1{
   margin-top: 15px;
 }
 
-.searchBar{
-  width: 350px;
-  border-radius: 15px;
-  border: 1px #000 solid;
-  padding: 5px 5px 5px 25px;
+.row{
+  display: flex;
 }
+
+.column {
+  flex: 75%;
+  padding: 10px;
+}
+
+.column2 {
+  flex: 25%;
+  padding:10px;
+  background-color: rgb(250, 250, 250)
+}
+
+
+
+
+//Star Formatting
+fieldset, label { margin: 0; padding: 0; }
+body{ margin: 20px; }
+h1 { font-size: 1.5em; margin: 10px; }
+
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 3px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover, 
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } 
+
+.rating > input:checked + label:hover, 
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,  selection 
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
