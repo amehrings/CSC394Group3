@@ -73,7 +73,8 @@ export class UserComponent implements OnInit{
 
   openSearchDialog() {
     const dialogRef = this.dialog.open(DialogSearchComponent, {
-      width: '750px'
+      width: '750px',
+      position: {top: '50px'}
     });
 
     dialogRef.afterClosed().subscribe(() => {

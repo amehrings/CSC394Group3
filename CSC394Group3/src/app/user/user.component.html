@@ -8,14 +8,23 @@
   <div *ngIf='user.provider == "password"'>
     
     <div class= "yourSkills">
-      <h1>Your Skills</h1>
-      <mat-list>
-        <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
-          {{skill}}
-          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-        </mat-list-item>
-      </mat-list>
-      <button mat-stroked-button class= "skillsButton" (click)="openSearchDialog()">+ more skills...</button>  
+      <mat-tab-group>
+        <mat-tab label="Skills">
+            <mat-list class = "scrollable">
+                <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
+                  {{skill}}
+                  <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                </mat-list-item>
+              </mat-list>
+        </mat-tab>
+        <mat-tab label="Classes">
+          <mat-list class = "scrollable">
+            Class List here
+          </mat-list>
+        </mat-tab>
+      </mat-tab-group>
+      
+      <button mat-stroked-button class= "skillsButton" (click)="openSearchDialog()">+ More...</button>  
 
     </div>
     

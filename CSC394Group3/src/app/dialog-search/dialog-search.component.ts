@@ -23,6 +23,9 @@ export class DialogSearchComponent implements OnInit{
   startAt = new Subject();
   endAt = new Subject();
   searchSkills: any[];
+  first: boolean = true;
+  lastKeypress: number = 0;
+  lowerCaseSkillsList: any[];
 
   constructor(public dialogRef: MatDialogRef<DialogSearchComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,     
@@ -33,22 +36,26 @@ export class DialogSearchComponent implements OnInit{
   ngOnInit(){
     this.skillsService.getSkills().subscribe((skills) => {
       this.skills = skills[0].skills;
+      this.lowerCaseSkillsList = this.skills.map(v => v.toLowerCase());
     });
+    
+
   }
   
   onNoClick(): void {
     this.dialogRef.close();
-    
   }
 
   search($event) {
-    let q = $event.target.value.toLowerCase()
-    console.log(q)
-    this.startAt.next(q);
-    this.endAt.next(q+"\uf8ff");
+    if ($event.timeStamp -this.lastKeypress > 50){
+      let q = $event.target.value
+      //this.startAt.next(q);
+      //this.endAt.next(q+"\uf8ff");
 
-    this.searchSkills = this.skills.filter(skills=> skills.indexOf(q) !== -1);
-    
+      this.searchSkills = this.lowerCaseSkillsList.filter(skills=> skills.indexOf(q) !== -1);
+      console.log(q)
+    }
+    this.lastKeypress = $event.timeStamp
   }
 
   selectionChange(option: MatListOption) {

@@ -9,6 +9,12 @@ h1{
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.scrollable{
+  min-height: 300px;
+  height: 300px;
+  overflow-y: scroll;
+}
+
 .skillsButton{
   margin-top: 15px;
 }

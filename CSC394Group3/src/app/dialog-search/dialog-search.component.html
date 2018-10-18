@@ -1,23 +1,33 @@
 <div class="skillSearch">
-    <h1>Skills Search</h1>
-    <input class="searchBar" type="text" [(ngModel)]="searchterm" (keydown)="search($event)">
-    <mat-selection-list #list (selectionChange)="selectionChange($event.option)">
-      <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill">
-        {{skill.toLowerCase()}}
-      </mat-list-option>
-    </mat-selection-list>
+    <mat-tab-group class = "tabs">
+        <mat-tab label="Skills" class= "skillsTab">
+            <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
+            <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class= "scrollable">
+              <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
+              <mat-list-option *ngFor="let skill of searchSkills" [value] = "skill">
+
+                {{skill.toLowerCase()}}
+              </mat-list-option>
+            </mat-selection-list>
+        </mat-tab>
+        <mat-tab label= "Classes" class= "classesTab">
+            <mat-list class = "scrollable">
+                Class List here
+            </mat-list>
+        </mat-tab>
+  </mat-tab-group>
+  <button mat-stroked-button (click)="onNoClick()">Done</button>  
 
     <!-- <ul *ngFor="let skill of searchSkills">
       <li>{{skill}}</li>
     </ul> -->
 
-    <div *ngIf="searchSkills?.length < 1">
+    <!-- <div *ngIf="searchSkills?.length < 1">
       <hr>
       <p>
         Please search for skills
      </p>
-    </div>
-    <button mat-stroked-button (click)="onNoClick()">Done</button>  
+    </div> -->
     <!-- <form [formGroup]="profileForm">
       <div class="form-group">
         <label>Your name</label>
@@ -26,4 +36,4 @@
     </form>
     <br>
     <button mat-stroked-button (click)="save(profileForm.value)">+ more skills...</button>  --> 
-  </div>
+</div>
