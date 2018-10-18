@@ -21,13 +21,13 @@ export class skillsSearchService {
     ref).valueChanges();
   }
 
-  getUserSkills(): any[] {
-    const firestore = firebase.firestore();
-    var db = firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(function(doc) {
-      console.log(doc.data().skills)
-      this.dbSkills= doc.data().skills
-    })
-    return this.dbSkills;
-  }
+  // getUserSkills(): any[] {
+  //   const firestore = firebase.firestore();
+  //   var db = firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(function(doc) {
+  //     console.log(doc.data().skills)
+  //     this.dbSkills= doc.data().skills
+  //   })
+  //   return this.dbSkills;
+  // }
 
 }

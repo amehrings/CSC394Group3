@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule} from './material.module';
 import { NavComponent } from './nav/nav.component';
 import { skillsSearchService } from './skills-search.service';
+import { DialogSearchComponent } from './dialog-search/dialog-search.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { skillsSearchService } from './skills-search.service';
     RegisterComponent,
     LoginComponent,
     UserComponent,
-    NavComponent  
+    NavComponent,
+    DialogSearchComponent  
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,7 @@ import { skillsSearchService } from './skills-search.service';
     MaterialModule
   ],
   providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogSearchComponent]
 })
 export class AppModule { }

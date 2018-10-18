@@ -5,12 +5,10 @@ import { AuthService } from '../core/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { skillsSearchService } from '../skills-search.service';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Rx';
-import { MatListOption} from '@angular/material/list';
-import { AngularFirestore } from 'angularfire2/firestore';
+
 import * as firebase from 'firebase/app';
+import { MatDialog } from '@angular/material';
+import { DialogSearchComponent } from '../dialog-search/dialog-search.component';
 
 
 @Component({
@@ -21,10 +19,7 @@ import * as firebase from 'firebase/app';
 
 export class UserComponent implements OnInit{
 
-  skills: any[];
-  startAt = new Subject();
-  endAt = new Subject();
-  searchSkills: any[];
+  
   dbSkills: any[];
   result: String;
 
@@ -37,8 +32,7 @@ export class UserComponent implements OnInit{
     private route: ActivatedRoute,
     private location: Location,
     private form: FormBuilder,
-    private skillsService: skillsSearchService,
-    private afs: AngularFirestore
+    public dialog: MatDialog
   ) {
   }
 
@@ -47,9 +41,6 @@ export class UserComponent implements OnInit{
       let data = routeData['data'];
       if (data) {
         this.user = data;
-        this.skillsService.getSkills().subscribe((skills) => {
-          this.skills = skills[0].skills;
-        });
         this.dbSkills = this.getUserSkills()
         console.log(this.dbSkills)
         this.createForm(this.user.name);
@@ -67,35 +58,27 @@ export class UserComponent implements OnInit{
     return [];
   }
 
-  search($event) {
-    let q = $event.target.value.toLowerCase()
-    console.log(q)
-    this.startAt.next(q);
-    this.endAt.next(q+"\uf8ff");
-
-    this.searchSkills = this.skills.filter(skills=> skills.indexOf(q) !== -1);
-    
-  }
-
-  selectionChange(option: MatListOption) {
-    if(option.selected == true){     
-      this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
-      this.getUserSkills()
-    }    
- }
-
-
   createForm(name) {
     this.profileForm = this.form.group({
       name: [name, Validators.required ]
     });
   }
 
-  save(value) {
-    this.userService.updateCurrentUser(value)
-    .then(res => {
-      console.log(res);
-    }, err => console.log(err));
+  // save(value) {
+  //   this.userService.updateCurrentUser(value)
+  //   .then(res => {
+  //     console.log(res);
+  //   }, err => console.log(err));
+  // }
+
+  openSearchDialog() {
+    const dialogRef = this.dialog.open(DialogSearchComponent, {
+      width: '750px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getUserSkills();
+    });
   }
 
   logout(){

@@ -1,0 +1,29 @@
+<div class="skillSearch">
+    <h1>Skills Search</h1>
+    <input class="searchBar" type="text" [(ngModel)]="searchterm" (keydown)="search($event)">
+    <mat-selection-list #list (selectionChange)="selectionChange($event.option)">
+      <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill">
+        {{skill.toLowerCase()}}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <!-- <ul *ngFor="let skill of searchSkills">
+      <li>{{skill}}</li>
+    </ul> -->
+
+    <div *ngIf="searchSkills?.length < 1">
+      <hr>
+      <p>
+        Please search for skills
+     </p>
+    </div>
+    <button mat-stroked-button (click)="onNoClick()">Done</button>  
+    <!-- <form [formGroup]="profileForm">
+      <div class="form-group">
+        <label>Your name</label>
+          <input type="text" formControlName="name" required>
+      </div>
+    </form>
+    <br>
+    <button mat-stroked-button (click)="save(profileForm.value)">+ more skills...</button>  --> 
+  </div>
