@@ -87,10 +87,26 @@ export class UserComponent implements OnInit{
     });
   }
 
+  displayMessage(num: Number): String{
+    switch(num){
+      case  5: {
+        return "Extremely Confident";
+      }
+
+      case  3: {
+        return "Confident";
+      }
+
+      case  1: {
+        return "Familiar But Not Confident";
+      }
+    }
+  }
   starHandler(skill: String, num: Number){
     console.log(skill)
     console.log(num)
   }
+  
   // save(value) {
   //   this.userService.updateCurrentUser(value)
   //   .then(res => {

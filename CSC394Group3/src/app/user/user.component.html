@@ -1,6 +1,8 @@
-<img src="https://img3.stockfresh.com/files/k/kurhan/m/15/392402_stock-photo-business-handshake.jpg" alt="JobMatcher">
+
+<section>
 <h1>Welcome back, {{getName()}}</h1>
-<div>
+<img src="https://img3.stockfresh.com/files/k/kurhan/m/15/392402_stock-photo-business-handshake.jpg" alt="JobMatcher">
+<div class = "yourSkills">
   <br>
   <div *ngIf='user.provider != "password"'>
     <h4 class="card-title">{{user.name}}</h4>
@@ -17,6 +19,7 @@
                     {{skill}}
                     <mat-divider [inset]="true"></mat-divider>
                   </mat-list-item>
+
                 </div>
                 <div class="column2">
                   <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
@@ -26,8 +29,8 @@
                                   [id]="skill+'star'+num"
                                   [value]="num"
                                   name={{skill}} 
-                                  type="radio" />                              
-                            <label class="full" [for]="skill+'star'+num"></label>
+                                  type="radio" />                            
+                            <label [matTooltip]="displayMessage(num)" class="full" [for]="skill+'star'+num"></label>
                         </ng-container>
                     </fieldset>
                     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
@@ -49,3 +52,4 @@
     
   </div>
 </div>
+</section>

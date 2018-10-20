@@ -1,12 +1,23 @@
 
 
+section {
+  width: 70%;
+  margin-left: 250px;
+  margin-top: 50px;
+  margin-right: 250px;
+}
+
+.img{
+  float: left;
+  width: 50%;
+}
+
 .yourSkills{
   float: right;
-  margin-right: 250px;
-  margin-top: -500px;
+  width: 50%;
   width: 700px;
-
 }
+
 h1{
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
@@ -35,9 +46,6 @@ h1{
   padding:10px;
   background-color: rgb(250, 250, 250)
 }
-
-
-
 
 //Star Formatting
 fieldset, label { margin: 0; padding: 0; }
