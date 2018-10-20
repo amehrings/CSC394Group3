@@ -24,14 +24,18 @@
                 <div class="column2">
                   <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
                     <fieldset class="rating">
+
                         <ng-container  *ngFor="let num of [5, 4, 3, 2, 1]">
-                            <input (click)="starHandler(skill, num)" 
-                                  [id]="skill+'star'+num"
-                                  [value]="num"
-                                  name={{skill}} 
-                                  type="radio" />                            
-                            <label [matTooltip]="displayMessage(num)" class="full" [for]="skill+'star'+num"></label>
-                        </ng-container>
+                                <input (click)="starHandler(skill, num)" 
+                                [id]="skill+'star'+num"
+                                [value]="num"
+                                name={{skill}} 
+                                type="radio" />
+                            <!-- <label *ngIf="starCheck(skill) != 0" [matTooltip]="displayMessage(num)" [for]="skill+'star'+starCheck(skill)"></label> -->
+                            <!-- <label *ngIf="starCheck(skill) == 0" [matTooltip]="displayMessage(num)" [for]="skill+'star'+ num"></label> -->
+                            <label [matTooltip]="displayMessage(num)" [for]="skill+'star'+ num"></label>
+                          </ng-container> 
+
                     </fieldset>
                     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
                   </mat-list-item>

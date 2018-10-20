@@ -60,7 +60,10 @@ export class DialogSearchComponent implements OnInit{
 
   selectionChange(option: MatListOption) {
     if(option.selected == true){     
-      this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
+      var skillsUpdate={};
+      skillsUpdate['skillsMap.'+option.value.toLowerCase()] = 0;
+      this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
+      //this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
     }    
   }  
 

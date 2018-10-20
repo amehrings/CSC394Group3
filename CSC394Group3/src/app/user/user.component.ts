@@ -5,6 +5,7 @@ import { AuthService } from '../core/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 import * as firebase from 'firebase/app';
 import { MatDialog } from '@angular/material';
@@ -21,8 +22,9 @@ export class UserComponent implements OnInit{
 
   
   dbSkills: any[];
+  dbSkillsRating: any[];
+  dbMap: Map<String,Number>;
   result: String;
-
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
 
@@ -32,8 +34,10 @@ export class UserComponent implements OnInit{
     private route: ActivatedRoute,
     private location: Location,
     private form: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private afs: AngularFirestore
   ) {
+    this.dbSkills= this.getUserSkills();
   }
 
   ngOnInit(): void {
@@ -41,7 +45,7 @@ export class UserComponent implements OnInit{
       let data = routeData['data'];
       if (data) {
         this.user = data;
-        this.dbSkills = this.getUserSkills()
+        //this.dbSkills = this.getUserSkills()
         this.createForm(this.user.name);
       }
     });
@@ -50,7 +54,12 @@ export class UserComponent implements OnInit{
   getUserSkills(): any[] {
     const firestore = firebase.firestore();
     firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(doc => {
-      this.dbSkills = doc.data().skills
+      this.dbSkills = this.getKeys(doc.data().skillsMap);
+      this.dbSkillsRating = this.getValues(doc.data().skillsMap);
+      this.dbMap = this.getMap(doc.data().skillsMap);
+      console.log(this.dbSkills)
+      console.log(this.dbSkillsRating)
+
     }).catch(function(error) {
       return null;
     })
@@ -59,6 +68,18 @@ export class UserComponent implements OnInit{
 
   getName(){
     return firebase.auth().currentUser.displayName
+  }
+
+  getKeys(map){
+    return Array.from(this.getMap(map).keys())
+  }
+
+  getValues(map){
+    return Array.from(this.getMap(map).values())
+  }
+
+  getMap(map){
+    return new Map(Object.entries(map))
   }
 
   createForm(name) {
@@ -103,10 +124,17 @@ export class UserComponent implements OnInit{
     }
   }
   starHandler(skill: String, num: Number){
-    console.log(skill)
-    console.log(num)
+    var skillsUpdate={};
+    skillsUpdate['skillsMap.'+skill.toLowerCase()] = num;
+    this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
   }
-  
+
+  starCheck(skill: String){
+    console.log(this.dbMap.get(skill))
+    return this.dbMap.get(skill)
+    // if (this.dbMap.get(skill) !=)
+  }
+
   // save(value) {
   //   this.userService.updateCurrentUser(value)
   //   .then(res => {
