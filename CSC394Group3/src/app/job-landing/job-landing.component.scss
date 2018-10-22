@@ -27,13 +27,14 @@
   }
 
 .column {
-    flex: 50%;
+    flex: 30%;
     padding: 10px;
     background-color: rgb(250, 250, 250);
+    overflow: scroll;
 }
 
 .column2{
-    flex: 20%;
+    flex: 30%;
     padding:10px;
     background-color: rgb(245, 245, 245);
     

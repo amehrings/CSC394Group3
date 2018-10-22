@@ -33,13 +33,11 @@
     <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search existing matches...">
   </div>
   <mat-list class = "scrollable">
-    <div class = "row"  *ngFor = "let num of [1, 2, 3, 4, 5]; let i = index">
+    <div class = "row"  *ngFor = "let job of jobs">
         <div class="column">
-          <!-- <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills"> -->
           <mat-list-item class="jobs">
-            Job {{num}} Listing Here
+            {{job}}
           </mat-list-item>
-
         </div>
         <div class="column2">
           <mat-list-item class="percentMatch">
@@ -57,8 +55,8 @@
             <mat-list-item class="seeMore">
               <button mat-flat-button color="basic" style="margin: auto;">See More</button>
             </mat-list-item>
-          </div>
-      </div>
+        </div>
+    </div>
   </mat-list>
 
 

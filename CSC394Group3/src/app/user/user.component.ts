@@ -57,9 +57,6 @@ export class UserComponent implements OnInit{
       this.dbSkills = this.getKeys(doc.data().skillsMap);
       this.dbSkillsRating = this.getValues(doc.data().skillsMap);
       this.dbMap = this.getMap(doc.data().skillsMap);
-      console.log(this.dbSkills)
-      console.log(this.dbSkillsRating)
-
     }).catch(function(error) {
       return null;
     })

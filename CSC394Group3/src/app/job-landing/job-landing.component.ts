@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as firebase from 'firebase/app';
+import { AngularFirestore, QuerySnapshot } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -11,7 +15,7 @@ export class JobLandingComponent implements OnInit {
 
   firstColumn = 'Degrees';
   secondColumn = 'Jobs';
-  choicesArray: any[] = [];
+  choicesArray: any;
   flag: boolean = true;
 
   oldHeart = 'fa fa-heart';
@@ -19,14 +23,19 @@ export class JobLandingComponent implements OnInit {
 
 
   degrees: any[] = ["degree1", "degree2"];
-  jobs: any[] = ["job1", "job2"];
+  jobs: any[];
   saved: any[] = ["saved1", "saved2"];
 
   constructor(    private route: ActivatedRoute,
-    ) { }
+    private afs: AngularFirestore
+    ) { 
+    }
 
   ngOnInit() {
+    this.jobs = this.getJobs();
+    this.degrees = this.getDegrees();
     this.choicesArray = this.degrees;
+
   }
 
   switchHeart(){
@@ -47,5 +56,40 @@ export class JobLandingComponent implements OnInit {
       this.choicesArray = this.degrees;
       this.flag = true;
     }
+  }
+
+  getJobs(): any[]{
+    const firestore = firebase.firestore();
+    firestore.collection('/jobs').get().then((snapshot) =>{
+      snapshot.forEach(snapshot => {
+        // console.log(snapshot.id)
+        this.jobs.push(snapshot.id)
+        // console.log(snapshot.data())
+        this.replaceWithSpace(this.jobs)
+
+      })
+    })
+    return [];
+  }
+
+  getDegrees(): any[]{
+    const firestore = firebase.firestore();
+    firestore.collection('/degrees').get().then((snapshot) =>{
+      snapshot.forEach(snapshot => {
+        // console.log(snapshot.id)
+        this.degrees.push(snapshot.id)
+        // console.log(snapshot.data())
+        this.replaceWithSpace(this.degrees)
+      })
+    })
+    return [];
+  }
+
+  replaceWithSpace(a: Array<any>): any[]{
+    for (var i = 0; i < a.length; i++){
+      a[i] = a[i].replace('_', ' ');
+      console.log(a[i])
+    }
+    return a;
   }
 }
