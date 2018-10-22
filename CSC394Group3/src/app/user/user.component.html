@@ -13,33 +13,39 @@
       <mat-tab-group>
         <mat-tab label="Skills">
           <mat-list class = "scrollable">
-            <div class = "row">
+            <div class = "row" *ngFor="let skill of dbSkills">
                 <div class="column">
-                  <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
+                  <mat-list-item class = "skillItem">
                     {{skill}}
+                    <div class="column3">
+                        <button mat-mini-fab color="warn" class="remove" (click)="removeSkill(skill)" mat-raised-button color="basic" style="text-align: center;">
+                            <i class="fa fa-remove text-center"></i>
+                        </button>
+                    </div>
                     <mat-divider [inset]="true"></mat-divider>
                   </mat-list-item>
-
                 </div>
                 <div class="column2">
-                  <mat-list-item class = "skillItem" *ngFor="let skill of dbSkills">
+                  <mat-list-item class = "skillItem">
                     <fieldset class="rating">
 
                         <ng-container  *ngFor="let num of [5, 4, 3, 2, 1]">
                                 <input (click)="starHandler(skill, num)" 
-                                [id]="skill+'star'+num"
+                                [id]="skill+num"
                                 [value]="num"
                                 name={{skill}} 
                                 type="radio" />
-                            <!-- <label *ngIf="starCheck(skill) != 0" [matTooltip]="displayMessage(num)" [for]="skill+'star'+starCheck(skill)"></label> -->
-                            <!-- <label *ngIf="starCheck(skill) == 0" [matTooltip]="displayMessage(num)" [for]="skill+'star'+ num"></label> -->
-                            <label [matTooltip]="displayMessage(num)" [for]="skill+'star'+ num"></label>
+                            <label class="savedLabel" *ngIf="starCheck(skill) != 0 && starCheck(skill) >= num" [matTooltip]="displayMessage(num)" [for]="skill + num"></label>
+                            <label class="altSavedLabel" *ngIf="starCheck(skill) != 0 && starCheck(skill) < num" [matTooltip]="displayMessage(num)" [for]="skill + num"></label>
+                            <label class="newLabel" *ngIf="starCheck(skill) == 0" [matTooltip]="displayMessage(num)" [for]="skill + num"></label>
+                            <!-- <label [matTooltip]="displayMessage(num)" [for]="skill+'star'+ num"></label> -->
                           </ng-container> 
 
                     </fieldset>
                     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
                   </mat-list-item>
                 </div>
+                
               </div>
           </mat-list>
         </mat-tab>

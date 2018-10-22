@@ -37,17 +37,45 @@ h1{
 }
 
 .column {
-  flex: 75%;
+  flex: 70%;
   padding: 10px;
 }
 
+.column:hover .column3{
+    opacity: 1;
+}
+
 .column2 {
-  flex: 25%;
+  flex: 30%;
   padding:10px;
   background-color: rgb(250, 250, 250)
 }
 
+.column3 {
+  padding: 2px;
+  opacity: 0;
+  margin-left: auto;
+  margin-bottom: 10px;
+}
+
+.remove{
+  height: 40px;
+  width: 40px;
+}
+
+.fa-remove{
+  text-align: center;
+}
+.removeDiv{
+  text-align: center;
+  width: 50%;
+}
+
 //Star Formatting
+.skillItem{
+  margin: auto;
+}
+
 fieldset, label { margin: 0; padding: 0; }
 body{ margin: 20px; }
 h1 { font-size: 1.5em; margin: 10px; }
@@ -60,22 +88,35 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > input { display: none; } 
 .rating > label:before { 
   margin: 3px;
-  font-size: 1.25em;
+  font-size: 1.5em;
   font-family: FontAwesome;
   display: inline-block;
   content: "\f005";
 }
 
-.rating > label { 
-  color: #ddd; 
- float: right; 
+.rating > .altSavedLabel,
+.rating > .newLabel,
+{
+  color: #ddd;
+  float: right;
 }
 
-.rating > input:checked ~ label,
-.rating:not(:checked) > label:hover, 
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } 
+.rating > .savedLabel {
+  color: #FFD700;
+  float: right;
+}
 
-// .rating > input:checked + label:hover, 
-// .rating > input:checked ~ label:hover,
-// .rating > label:hover ~ input:checked ~ label,  selection 
-// .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+.rating > input:checked ~ .altSavedLabel,
+ {
+  color: #ddd;
+  float: right;
+}
+
+
+.rating > input:checked ~ .newLabel,
+.rating > input:checked ~ .altSavedLabel,
+.rating:not(:checked) > .newLabel:hover,
+.rating:not(:checked) > .altSavedLabel:hover,
+.rating:not(:checked) > .newLabel:hover ~ label,
+.rating:not(:checked) > .savedLabel:hover ~ label,
+.rating:not(:checked) > .altSavedLabel:hover ~ label { color: #FFD700;  }

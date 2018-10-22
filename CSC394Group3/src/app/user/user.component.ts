@@ -127,12 +127,19 @@ export class UserComponent implements OnInit{
     var skillsUpdate={};
     skillsUpdate['skillsMap.'+skill.toLowerCase()] = num;
     this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
+    this.getUserSkills();
   }
 
   starCheck(skill: String){
-    console.log(this.dbMap.get(skill))
     return this.dbMap.get(skill)
     // if (this.dbMap.get(skill) !=)
+  }
+
+  removeSkill(dbSkill: String){
+    var skillsUpdate = {};
+    skillsUpdate["skillsMap."+dbSkill] = firebase.firestore.FieldValue.delete()
+    this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
+    this.getUserSkills();
   }
 
   // save(value) {
