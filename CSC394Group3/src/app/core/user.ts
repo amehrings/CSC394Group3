@@ -10,6 +10,6 @@ export interface User {
     roles: Roles;
     concentration: string;
     degree: string;
-    skills: string[];
+    skillsMap: {};
 }
 
