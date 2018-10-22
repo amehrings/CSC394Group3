@@ -1,0 +1,106 @@
+.searchBar{
+    width: 975px;
+    border-radius: 15px;
+    border: 1px #000 solid;
+    padding: 10px;
+    display: inline-block;
+}
+
+.wrapper{
+    text-align: center;
+}
+
+.scrollable{
+    margin-top: 25px;
+    min-height: 320px;
+    height: 320px;
+    overflow-y: scroll;
+    width: 1000px;
+    display: inline-block;
+}
+
+.row{
+    display: flex;
+    width: auto;
+    align-items: center;
+    margin-bottom: 3px;
+  }
+
+.column {
+    flex: 50%;
+    padding: 10px;
+    background-color: rgb(250, 250, 250);
+}
+
+.column2{
+    flex: 20%;
+    padding:10px;
+    background-color: rgb(245, 245, 245);
+    
+}
+.column3{
+    flex: 15%;
+    padding:10px;
+    background-color: rgb(245, 245, 245);
+}
+.column4{
+    flex: 15%;
+    padding:10px;
+    background-color: rgb(245, 245, 245);
+}
+
+.seeMore {
+    margin: auto;
+    text-align: center;
+}
+
+.fa-heart-o{
+    color: black;
+}
+
+.select{
+    width: 1000px;
+    display: inline-block;
+    margin-top: 25px;
+
+}
+.selectRow{
+    display: flex;
+    width: auto;
+    align-items: center;
+    margin-top: 3px;
+  }
+
+.firstSelectColumn{
+    flex: 10%;
+    padding: 10px;
+}
+
+.secondSelectColumn{
+    flex: 80%;
+    padding: 10px;
+    text-align: left;
+}
+
+.fa-arrows-h{
+    color: gray;
+}
+
+.switch{
+    flex: 10%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.thirdColumnSaved{
+    flex: 70%;
+    text-align: right;
+    font-size: 12px;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+.h3Text{
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: gray;
+}

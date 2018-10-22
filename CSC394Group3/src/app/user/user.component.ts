@@ -23,7 +23,7 @@ export class UserComponent implements OnInit{
   
   dbSkills: any[];
   dbSkillsRating: any[];
-  dbMap: Map<String,Number>;
+  dbMap: Map<String, any>;
   result: String;
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;

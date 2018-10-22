@@ -20,6 +20,7 @@ import { MaterialModule} from './material.module';
 import { NavComponent } from './nav/nav.component';
 import { skillsSearchService } from './skills-search.service';
 import { DialogSearchComponent } from './dialog-search/dialog-search.component';
+import { JobLandingComponent } from './job-landing/job-landing.component';
 
 
 
@@ -31,7 +32,8 @@ import { DialogSearchComponent } from './dialog-search/dialog-search.component';
     LoginComponent,
     UserComponent,
     NavComponent,
-    DialogSearchComponent  
+    DialogSearchComponent,
+    JobLandingComponent  
   ],
   imports: [
     BrowserModule,
