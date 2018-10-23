@@ -3,7 +3,7 @@ import 'rxjs/add/operator/toPromise';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
-import { User } from './user';
+import {User} from './user';
 import { Observable} from 'rxjs/Observable';
 import { of as observableOf } from 'rxjs/Observable/of';
 import { switchMap } from 'rxjs/operators';
@@ -54,17 +54,19 @@ export class AuthService {
   }
 
   
-  updateUserData(userEmail:string, userId: string){
+  updateUserData(userEmail:string = '', userId: string = '', userDegree = '', userConcentration = '', isStudent: boolean = true, isFaculty: boolean = false, isAdmin: boolean = false, userSkills = {}){
     const user: User = {
       userId: userId,
       email: userEmail,
       roles: {
-        student: true
+        student: isStudent,
+        faculty: isFaculty,
+        admin: isAdmin
       },
-      concentration: '',
-      degree: '',
-      skillsMap: {}
-    }
+      concentration: userConcentration,
+      degree: userDegree,
+      skillsMap: userSkills
+    };
     const userRef: AngularFirestoreDocument<any> = this.afs.doc('users/' + user.userId);
 
     const userData: User = user;
