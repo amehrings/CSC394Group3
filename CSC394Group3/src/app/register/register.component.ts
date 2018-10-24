@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit{
      this.authService.doRegister(value)
      .then(res => {
        console.log(res);
-       this.authService.updateUserData(res.user.email, res.user.uid);
+       this.authService.updateUserData(res.user.email, res.user.uid,res.user.degree);
        this.errorMessage = "";
        this.successMessage = "Account Created";
      }, err => {
