@@ -1,39 +1,76 @@
 <div class="skillSearch">
-    <mat-tab-group class = "tabs">
-        <mat-tab label="Skills" class= "skillsTab">
-            <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
-            <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class= "scrollable">
-              <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
-              <mat-list-option *ngFor="let skill of searchSkills" [value] = "skill">
-
-                {{skill.toLowerCase()}}
-              </mat-list-option>
-            </mat-selection-list>
-        </mat-tab>
-        <mat-tab label= "Classes" class= "classesTab">
-            <mat-list class = "scrollable">
-                Class List here
-            </mat-list>
-        </mat-tab>
+  <mat-tab-group class="tabs" (selectedTabChange)="showAccordion($event)">
+    <mat-tab label="Skills" class="skillsTab">
+      <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
+      <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class="scrollable">
+        <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
+        <mat-list-option *ngFor="let skill of searchSkills" [value]="skill">
+          {{skill.toLowerCase()}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-tab>
+    
+    <mat-tab label="Classes" class="classesTab">
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <ng-template matStepLabel>Degrees</ng-template>
+          <mat-selection-list #list class="scrollable">
+            <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
+            <mat-list-option [value]="degree" *ngFor="let degree of degrees">
+              {{degree}}
+            </mat-list-option>
+          </mat-selection-list>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+            <ng-template matStepLabel>Courses/Concentrations</ng-template>
+            <mat-selection-list #list class="scrollable">
+                <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
+                <mat-list-option *ngFor="let course of courses" [value] = "course">
+                  {{course}}
+                </mat-list-option>
+              </mat-selection-list>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+          </mat-step>
+      </mat-horizontal-stepper>
+      
+      <button mat-stroked-button (click)="onNoClick()">Done</button>
+    </mat-tab>
   </mat-tab-group>
-  <button mat-stroked-button (click)="onNoClick()">Done</button>  
 
-    <!-- <ul *ngFor="let skill of searchSkills">
+  <!-- <mat-list>
+                <mat-list-item > -->
+  <!-- <mat-expansion-panel (opened)="loadDocs(degree)"> 
+                                {{degree}}-->
+  <!-- <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class= "scrollable">
+                                          <mat-selection-list #list class="scrollable">
+                                            <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill">
+                                            <mat-list-option *ngFor="let course of courses" [value] = "course">
+                                              {{course}}
+                                            </mat-list-option>
+                                          </mat-selection-list> -->
+
+  <!-- <ul *ngFor="let skill of searchSkills">
       <li>{{skill}}</li>
     </ul> -->
 
-    <!-- <div *ngIf="searchSkills?.length < 1">
+  <!-- <div *ngIf="searchSkills?.length < 1">
       <hr>
       <p>
         Please search for skills
      </p>
     </div> -->
-    <!-- <form [formGroup]="profileForm">
+  <!-- <form [formGroup]="profileForm">
       <div class="form-group">
         <label>Your name</label>
           <input type="text" formControlName="name" required>
       </div>
     </form>
     <br>
-    <button mat-stroked-button (click)="save(profileForm.value)">+ more skills...</button>  --> 
+    <button mat-stroked-button (click)="save(profileForm.value)">+ more skills...</button>  -->
 </div>

@@ -14,7 +14,21 @@
   }
 
   .scrollable{
-    min-height: 700px;
-    height: 700px;
+    min-height: 600px;
+    height: 600px;
     overflow-y: scroll;
+  }
+
+.skillSearch{
+    min-height: 800px;
+    height: 800px;
+}
+
+.mat-expansion-panel-header {
+    height: 48px;
+  }
+  .mat-expansion-panel-content:not(.mat-expanded) {
+    .mat-expansion-panel-body {
+      padding-bottom: 0;
+    }
   }

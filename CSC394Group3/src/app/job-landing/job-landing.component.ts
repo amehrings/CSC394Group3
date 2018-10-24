@@ -22,7 +22,7 @@ export class JobLandingComponent implements OnInit {
   heart = 'fa fa-heart-o';
 
 
-  degrees: any[] = ["degree1", "degree2"];
+  degrees: any[];
   jobs: any[];
   saved: any[] = ["saved1", "saved2"];
 
@@ -88,7 +88,7 @@ export class JobLandingComponent implements OnInit {
   replaceWithSpace(a: Array<any>): any[]{
     for (var i = 0; i < a.length; i++){
       a[i] = a[i].replace('_', ' ');
-      console.log(a[i])
+      // console.log(a[i])
     }
     return a;
   }

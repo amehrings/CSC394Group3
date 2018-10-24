@@ -26,6 +26,9 @@ export class DialogSearchComponent implements OnInit{
   first: boolean = true;
   lastKeypress: number = 0;
   lowerCaseSkillsList: any[];
+  degrees: any[];
+  showAccordianBool: boolean;
+  courses: any[];
 
   constructor(public dialogRef: MatDialogRef<DialogSearchComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,     
@@ -38,9 +41,25 @@ export class DialogSearchComponent implements OnInit{
       this.skills = skills[0].skills;
       this.lowerCaseSkillsList = this.skills.map(v => v.toLowerCase());
     });
-    
 
+    this.degrees = this.getDegrees();   
+    console.log(this.courses) 
   }
+
+  showAccordion(event) {
+    console.log(event)
+        if (event.index === 1) {
+            setTimeout(() => {
+                this.showAccordianBool = true;
+                console.log(this.showAccordianBool)
+            }, 100);
+        } else {
+            setTimeout(() => {
+                this.showAccordianBool = false;
+            }, 100);
+        }
+  }
+  
   
   onNoClick(): void {
     this.dialogRef.close();
@@ -53,7 +72,6 @@ export class DialogSearchComponent implements OnInit{
       //this.endAt.next(q+"\uf8ff");
 
       this.searchSkills = this.lowerCaseSkillsList.filter(skills=> skills.indexOf(q) !== -1);
-      console.log(q)
     }
     this.lastKeypress = $event.timeStamp
   }
@@ -67,6 +85,37 @@ export class DialogSearchComponent implements OnInit{
     }    
   }  
 
+  getDegrees(): any[]{
+    const firestore = firebase.firestore();
+    firestore.collection('/degrees').get().then((snapshot) =>{
+      snapshot.forEach(snapshot => {
+        // console.log(snapshot.id)
+        this.degrees.push(snapshot.id)
+        // console.log(snapshot.data())
+        this.replaceWithSpace(this.degrees)
+      })
+    })
+    return [];
+  }
   
+  replaceWithSpace(a: Array<any>): any[]{
+    for (var i = 0; i < a.length; i++){
+      a[i] = a[i].replace('_', ' ');
+    }
+    return a;
+  }
+
+  loadDocs(s: string): any[]{
+    console.log(s)
+    const firestore = firebase.firestore();
+    firestore.collection('/degrees').doc(s).get().then(doc => {
+      console.log(doc.data())
+      this.courses = doc.data().courses;
+      console.log(doc.data())
+    }).catch(function(error) {
+      return this.courses;
+    })
+    return [];
+  }
 
 }
