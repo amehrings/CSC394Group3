@@ -1,5 +1,5 @@
 <div class="skillSearch">
-  <mat-tab-group class="tabs" (selectedTabChange)="showAccordion($event)">
+  <mat-tab-group class="tabs">
     <mat-tab label="Skills" class="skillsTab">
       <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
       <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class="scrollable">
@@ -11,21 +11,36 @@
     </mat-tab>
     
     <mat-tab label="Classes" class="classesTab">
-      <mat-horizontal-stepper linear #stepper>
+      <mat-horizontal-stepper #stepper>
         <mat-step [stepControl]="firstFormGroup">
           <ng-template matStepLabel>Degrees</ng-template>
-          <mat-selection-list #list class="scrollable">
+          <mat-selection-list #list class="scrollable" (selectionChange)="loadDocs($event.option)">
             <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
             <mat-list-option [value]="degree" *ngFor="let degree of degrees">
               {{degree}}
             </mat-list-option>
           </mat-selection-list>
-          <div>
+          <!-- <div  *ngIf="isEmpty(concentrations) == false; else noConcentrations"> -->
+          <!-- </div> -->
+          <!-- <ng-template #noConcentrations>
             <button mat-button matStepperNext>Next</button>
-          </div>
+          </ng-template> -->
         </mat-step>
         <mat-step [stepControl]="secondFormGroup">
-            <ng-template matStepLabel>Courses/Concentrations</ng-template>
+            <ng-template matStepLabel>Concentrations</ng-template>
+            <mat-selection-list #list class="scrollable">
+                <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
+                <mat-list-option *ngFor="let concentration of concentrations" [value] = "concentration">
+                  {{concentration}}
+                </mat-list-option>
+              </mat-selection-list>
+              <!-- <div>
+                <button (click)="clearArray()"mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+              </div> -->
+          </mat-step>
+          <mat-step [stepControl]="thirdFormGroup">
+            <ng-template matStepLabel>Courses</ng-template>
             <mat-selection-list #list class="scrollable">
                 <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
                 <mat-list-option *ngFor="let course of courses" [value] = "course">

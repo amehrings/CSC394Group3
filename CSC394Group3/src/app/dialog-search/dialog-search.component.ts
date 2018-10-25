@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { skillsSearchService } from '../skills-search.service';
 import { Subject } from 'rxjs/Subject';
@@ -7,6 +7,8 @@ import { MatListOption} from '@angular/material/list';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { UserComponent } from '../user/user.component';
 import * as firebase from 'firebase/app';
+import { MatStepper } from '@angular/material';
+
 
 export interface DialogData {
   data: string;
@@ -29,6 +31,9 @@ export class DialogSearchComponent implements OnInit{
   degrees: any[];
   showAccordianBool: boolean;
   courses: any[];
+  concentrations: any[];
+  @ViewChild('stepper') stepper: MatStepper;
+  isValid: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogSearchComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,     
@@ -43,23 +48,7 @@ export class DialogSearchComponent implements OnInit{
     });
 
     this.degrees = this.getDegrees();   
-    console.log(this.courses) 
   }
-
-  showAccordion(event) {
-    console.log(event)
-        if (event.index === 1) {
-            setTimeout(() => {
-                this.showAccordianBool = true;
-                console.log(this.showAccordianBool)
-            }, 100);
-        } else {
-            setTimeout(() => {
-                this.showAccordianBool = false;
-            }, 100);
-        }
-  }
-  
   
   onNoClick(): void {
     this.dialogRef.close();
@@ -105,17 +94,59 @@ export class DialogSearchComponent implements OnInit{
     return a;
   }
 
-  loadDocs(s: string): any[]{
-    console.log(s)
-    const firestore = firebase.firestore();
-    firestore.collection('/degrees').doc(s).get().then(doc => {
-      console.log(doc.data())
-      this.courses = doc.data().courses;
-      console.log(doc.data())
-    }).catch(function(error) {
-      return this.courses;
-    })
-    return [];
+  underscoreFix(s: string): string{
+    for (var i = 0; i < s.length; i++){
+      s = s.replace(' ', '_');
+    }
+    return s;
   }
 
+  clearArray(){
+    this.courses=[];
+    this.concentrations=[];
+  }
+  
+  getKeys(map){
+    return [... Array.from(map.keys()).slice(0)]
+  }
+
+  getValues(map){
+    return [... Array.from(map.values()).slice(0)]
+  }
+
+  getMap(map){
+    return new Map(Object.entries(map))
+  }
+
+  isEmpty(a: any[]): boolean{
+    if (a.length == 0){
+      return true
+    }
+    return false
+  }
+
+  goForward(){
+    this.stepper.next()
+  }
+
+  loadDocs(option: MatListOption): any[]{
+    if(option.selected == true){
+      const firestore = firebase.firestore();
+      firestore.collection('/degrees').doc(this.underscoreFix(option.value)).get().then(doc => {
+        if(doc.data().courses){
+          this.courses = doc.data().courses;
+        }else{
+          this.concentrations = this.getKeys(this.getMap(doc.data()))
+          this.courses = this.getValues(this.getMap(doc.data()))
+        }
+
+        if (typeof(this.concentrations) == 'undefined' ){
+          this.stepper.selectedIndex = 2;
+        }else{
+          this.stepper.next()
+        }
+      })
+      return [];
+    }
+  }
 }
