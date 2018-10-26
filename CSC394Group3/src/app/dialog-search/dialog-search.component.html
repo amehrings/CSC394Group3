@@ -3,7 +3,6 @@
     <mat-tab label="Skills" class="skillsTab">
       <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
       <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class="scrollable">
-        <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
         <mat-list-option *ngFor="let skill of searchSkills" [value]="skill">
           {{skill.toLowerCase()}}
         </mat-list-option>
@@ -16,27 +15,20 @@
         <mat-step [stepControl]="firstFormGroup">
           <ng-template matStepLabel>Degrees</ng-template>
           <mat-selection-list #list class="scrollable" (selectionChange)="loadDocs($event.option)">
-            <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
             <mat-list-option [value]="degree" *ngFor="let degree of degrees">
               {{degree}}
             </mat-list-option>
           </mat-selection-list>
-          <!-- <div  *ngIf="isEmpty(concentrations) == false; else noConcentrations"> -->
-          <!-- </div> -->
-          <!-- <ng-template #noConcentrations>
-            <button mat-button matStepperNext>Next</button>
-          </ng-template> -->
         </mat-step>
         <mat-step [stepControl]="secondFormGroup">
             <ng-template matStepLabel>Concentrations</ng-template>
-            <mat-selection-list #list class="scrollable" (selectionChange)="getCourses($event.option.value)">
-                <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->
+            <mat-selection-list #list class="scrollable" (selectionChange)="getCourses($event.option)">
                 <mat-list-option *ngFor="let concentration of concentrations" [value] = "concentration">
                   {{concentration}}
                 </mat-list-option>
               </mat-selection-list>
               <!-- <div>
-                <button (click)="clearArray()"mat-button matStepperPrevious>Back</button>
+                <button (click)="clearArray()" mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
               </div> -->
           </mat-step>
@@ -48,45 +40,13 @@
                   {{course}}
                 </mat-list-option>
               </mat-selection-list>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
+              <!-- <div>
+                <button (click)="clearArray2()" mat-button matStepperPrevious>Back</button>
+              </div> -->
           </mat-step>
       </mat-horizontal-stepper>
       
       <button mat-stroked-button (click)="onNoClick()">Done</button>
     </mat-tab>
   </mat-tab-group>
-
-  <!-- <mat-list>
-                <mat-list-item > -->
-  <!-- <mat-expansion-panel (opened)="loadDocs(degree)"> 
-                                {{degree}}-->
-  <!-- <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class= "scrollable">
-                                          <mat-selection-list #list class="scrollable">
-                                            <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill">
-                                            <mat-list-option *ngFor="let course of courses" [value] = "course">
-                                              {{course}}
-                                            </mat-list-option>
-                                          </mat-selection-list> -->
-
-  <!-- <ul *ngFor="let skill of searchSkills">
-      <li>{{skill}}</li>
-    </ul> -->
-
-  <!-- <div *ngIf="searchSkills?.length < 1">
-      <hr>
-      <p>
-        Please search for skills
-     </p>
-    </div> -->
-  <!-- <form [formGroup]="profileForm">
-      <div class="form-group">
-        <label>Your name</label>
-          <input type="text" formControlName="name" required>
-      </div>
-    </form>
-    <br>
-    <button mat-stroked-button (click)="save(profileForm.value)">+ more skills...</button>  -->
 </div>

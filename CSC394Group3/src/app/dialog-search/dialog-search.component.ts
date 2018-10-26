@@ -34,7 +34,7 @@ export class DialogSearchComponent implements OnInit{
   concentrations: any[];
   dbCourseMap: Map<string, {}>;
   @ViewChild('stepper') stepper: MatStepper;
-  isValid: boolean = false;
+  isSelected: number= 0;
 
   constructor(public dialogRef: MatDialogRef<DialogSearchComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,     
@@ -105,6 +105,13 @@ export class DialogSearchComponent implements OnInit{
   clearArray(){
     this.courses=[];
     this.concentrations=[];
+    console.log(this.isSelected)
+  }
+
+  clearArray2(){
+    this.courses=[];
+    console.log(this.isSelected)
+
   }
   
   getKeys(map){
@@ -129,18 +136,21 @@ export class DialogSearchComponent implements OnInit{
     return finalMap
   }
 
-  getCourses(s){
-    var index;
-    for(let i = 0; i < this.concentrations.length; i++){
-      if (s === this.concentrations[i]){
-          index = i;
+  getCourses(option){
+    if(option.selected == true){
+      var index;
+      for(let i = 0; i < this.concentrations.length; i++){
+        if (option.value === this.concentrations[i]){
+            index = i;
+        }
       }
+      var objFirst = Object.entries(Array.from(this.dbCourseMap.values()))[index]
+      var objSecond = objFirst[1]
+      var finalMap = new Map(Object.entries(objSecond))
+      this.courses = Array.from(finalMap.keys())
+      this.stepper.next()
+      console.log(this.isSelected)
     }
-    var objFirst = Object.entries(Array.from(this.dbCourseMap.values()))[index]
-    var objSecond = objFirst[1]
-    var finalMap = new Map(Object.entries(objSecond))
-    this.courses = Array.from(finalMap.keys())
-    this.stepper.next()
   }
 
   courseSelection(option: MatListOption) {
@@ -162,13 +172,9 @@ export class DialogSearchComponent implements OnInit{
     return false
   }
 
-  goForward(option: string){
-    console.log(option)
-    this.stepper.next()
-  }
-
   loadDocs(option: MatListOption): any[]{
-    if(option.selected == true){
+    if(option.selected == true && this.isSelected < 1){
+      this.isSelected++
       const firestore = firebase.firestore();
       firestore.collection('/degrees').doc(this.underscoreFix(option.value)).get().then(doc => {
         if(doc.data().courses){
@@ -179,7 +185,7 @@ export class DialogSearchComponent implements OnInit{
           this.dbCourseMap = this.getMap(doc.data())
         }
 
-        if (typeof(this.concentrations) == 'undefined' ){
+        if (typeof(this.concentrations) == 'undefined' || this.concentrations.length == 0){
           this.stepper.selectedIndex = 2;
         }else{
           this.stepper.next()
