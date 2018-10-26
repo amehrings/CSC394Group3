@@ -32,6 +32,7 @@ export class DialogSearchComponent implements OnInit{
   showAccordianBool: boolean;
   courses: any[];
   concentrations: any[];
+  dbCourseMap: Map<string, {}>;
   @ViewChild('stepper') stepper: MatStepper;
   isValid: boolean = false;
 
@@ -72,7 +73,7 @@ export class DialogSearchComponent implements OnInit{
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
       //this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
     }    
-  }  
+  }
 
   getDegrees(): any[]{
     const firestore = firebase.firestore();
@@ -111,8 +112,44 @@ export class DialogSearchComponent implements OnInit{
   }
 
   getValues(map){
-    return [... Array.from(map.values()).slice(0)]
+    var objFirst = Object.entries(Array.from(map.values()))[0]
+    var objSecond = objFirst[1]
+    var finalMap = new Map(Object.entries(objSecond))
+    return Array.from(finalMap.keys())
   }
+
+  getCourseMap(map){
+    var objFirst = Object.entries(Array.from(map.values()))[0]
+    var test = map
+    console.log(test)
+    var objSecond = objFirst[1]
+    // console.log(objSecond)
+    var finalMap = new Map(Object.entries(objSecond))
+    // console.log(finalMap)
+    return finalMap
+  }
+
+  getCourses(s){
+    var index;
+    for(let i = 0; i < this.concentrations.length; i++){
+      if (s === this.concentrations[i]){
+          index = i;
+      }
+    }
+    var objFirst = Object.entries(Array.from(this.dbCourseMap.values()))[index]
+    var objSecond = objFirst[1]
+    var finalMap = new Map(Object.entries(objSecond))
+    this.courses = Array.from(finalMap.keys())
+    this.stepper.next()
+  }
+
+  courseSelection(option: MatListOption) {
+    if(option.selected == true){     
+      // skillsUpdate['skillsMap.'+option.value.toLowerCase()] = 0;
+      // this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
+      this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({courses: firebase.firestore.FieldValue.arrayUnion(option.value)});
+    }    
+  }  
 
   getMap(map){
     return new Map(Object.entries(map))
@@ -125,7 +162,8 @@ export class DialogSearchComponent implements OnInit{
     return false
   }
 
-  goForward(){
+  goForward(option: string){
+    console.log(option)
     this.stepper.next()
   }
 
@@ -138,6 +176,7 @@ export class DialogSearchComponent implements OnInit{
         }else{
           this.concentrations = this.getKeys(this.getMap(doc.data()))
           this.courses = this.getValues(this.getMap(doc.data()))
+          this.dbCourseMap = this.getMap(doc.data())
         }
 
         if (typeof(this.concentrations) == 'undefined' ){

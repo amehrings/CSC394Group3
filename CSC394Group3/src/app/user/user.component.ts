@@ -24,6 +24,7 @@ export class UserComponent implements OnInit{
   dbSkills: any[];
   dbSkillsRating: any[];
   dbMap: Map<String, any>;
+  dbCourses: any[];
   result: String;
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
@@ -57,6 +58,7 @@ export class UserComponent implements OnInit{
       this.dbSkills = this.getKeys(doc.data().skillsMap);
       this.dbSkillsRating = this.getValues(doc.data().skillsMap);
       this.dbMap = this.getMap(doc.data().skillsMap);
+      this.dbCourses = doc.data().courses;
     }).catch(function(error) {
       return null;
     })
