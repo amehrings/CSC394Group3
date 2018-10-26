@@ -17,7 +17,7 @@ export class JobLandingComponent implements OnInit {
   secondColumn = 'Jobs';
   choicesArray: any;
   flag: boolean = true;
-
+  selectedValue;
   oldHeart = 'fa fa-heart';
   heart = 'fa fa-heart-o';
 
@@ -51,10 +51,18 @@ export class JobLandingComponent implements OnInit {
 
     if (this.flag == true){
       this.choicesArray = this.jobs;
+      this.selectedValue = undefined;
       this.flag = false;
     } else {
       this.choicesArray = this.degrees;
+      this.selectedValue = undefined;
       this.flag = true;
+    }
+  }
+
+  performMatch(option){
+    if(option.isUserInput){
+      console.log(option.source.value)
     }
   }
 

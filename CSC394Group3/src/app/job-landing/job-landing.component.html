@@ -3,8 +3,8 @@
   <div class = "selectRow">
     <div class = "firstSelectColumn">
     <mat-form-field>
-      <mat-select placeholder="{{firstColumn}}">
-        <mat-option *ngFor = "let choices of choicesArray" [value] ="choices">
+      <mat-select placeholder="{{firstColumn}}" [(ngModel)]="selectedValue" >
+        <mat-option *ngFor = "let choices of choicesArray" id="choiceSelect" [value] ="choices" (onSelectionChange)="performMatch($event)">
           {{choices}}
         </mat-option>
       </mat-select>
