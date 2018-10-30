@@ -46,7 +46,7 @@
         </div>
         <div class="column3">
             <mat-list-item>
-              <button mat-button class="btn" (click) = "switchHeart()" >
+              <button mat-button class="btn" (click) = "switchHeart(job)" [value]="job" [id] = "job">
                 <i class="{{heart}}"></i>
               </button>
             </mat-list-item>

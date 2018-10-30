@@ -21,6 +21,12 @@ export class JobLandingComponent implements OnInit {
   oldHeart = 'fa fa-heart';
   heart = 'fa fa-heart-o';
 
+  selectedJob: string;
+
+  dbSkills: any[];
+  dbSkillsRating: any[];
+  dbMap: Map<String, any>;
+  dbCourses: any[];
 
   degrees: any[];
   jobs: any[];
@@ -29,6 +35,8 @@ export class JobLandingComponent implements OnInit {
   constructor(    private route: ActivatedRoute,
     private afs: AngularFirestore
     ) { 
+      this.dbSkills= this.getUserSkills();
+
     }
 
   ngOnInit() {
@@ -38,7 +46,10 @@ export class JobLandingComponent implements OnInit {
 
   }
 
-  switchHeart(){
+  switchHeart(id){
+    console.log(id)
+    var selectedHeart = document.getElementById(id);
+    console.log(selectedHeart.innerHTML)
     var temp = this.heart;
     this.heart = this.oldHeart;
     this.oldHeart = temp;
@@ -64,6 +75,33 @@ export class JobLandingComponent implements OnInit {
     if(option.isUserInput){
       console.log(option.source.value)
     }
+    console.log(this.dbSkills)
+    
+  }
+
+  getUserSkills(): any[] {
+    const firestore = firebase.firestore();
+    firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(doc => {
+      this.dbSkills = this.getKeys(doc.data().skillsMap);
+      this.dbSkillsRating = this.getValues(doc.data().skillsMap);
+      this.dbMap = this.getMap(doc.data().skillsMap);
+      this.dbCourses = doc.data().courses;
+    }).catch(function(error) {
+      return null;
+    })
+    return [];
+  }
+
+  getKeys(map){
+    return Array.from(this.getMap(map).keys())
+  }
+
+  getValues(map){
+    return Array.from(this.getMap(map).values())
+  }
+
+  getMap(map){
+    return new Map(Object.entries(map))
   }
 
   getJobs(): any[]{

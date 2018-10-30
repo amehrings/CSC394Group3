@@ -130,9 +130,9 @@ export class DialogSearchComponent implements OnInit{
     var test = map
     console.log(test)
     var objSecond = objFirst[1]
-    // console.log(objSecond)
+    console.log(objSecond)
     var finalMap = new Map(Object.entries(objSecond))
-    // console.log(finalMap)
+    console.log(finalMap)
     return finalMap
   }
 
