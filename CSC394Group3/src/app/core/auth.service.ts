@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   
-  updateUserData(userEmail:string = '', userId: string = '', userDegree = '', userConcentration = '', isStudent: boolean = true, isFaculty: boolean = false, isAdmin: boolean = false, userSkills = {}){
+  updateUserData(userEmail:string = '', userId: string = '', userDegree = '', userConcentration = '', isStudent: boolean = true, isFaculty: boolean = false, isAdmin: boolean = false, userSkills = {}, userJobs = {}){
     const user: User = {
       userId: userId,
       email: userEmail,
@@ -65,7 +65,8 @@ export class AuthService {
       },
       concentration: userConcentration,
       degree: userDegree,
-      skillsMap: userSkills
+      skillsMap: userSkills,
+      jobsMap: userJobs
     };
     const userRef: AngularFirestoreDocument<any> = this.afs.doc('users/' + user.userId);
 

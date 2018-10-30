@@ -11,5 +11,6 @@ export interface User {
     concentration: string;
     degree: string;
     skillsMap: {};
+    jobsMap: {};
 }
 
