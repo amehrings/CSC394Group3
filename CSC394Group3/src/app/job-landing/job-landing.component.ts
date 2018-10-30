@@ -18,25 +18,27 @@ export class JobLandingComponent implements OnInit {
   choicesArray: any;
   flag: boolean = true;
   selectedValue;
-  oldHeart = 'fa fa-heart';
-  heart = 'fa fa-heart-o';
+  heart = 'fa fa-heart';
+  noHeart = 'fa fa-heart-o';
 
   selectedJob: string;
 
   dbSkills: any[];
   dbSkillsRating: any[];
   dbMap: Map<String, any>;
+  jobsMap: Map<String, any>;
   dbCourses: any[];
 
   degrees: any[];
   jobs: any[];
   saved: any[] = ["saved1", "saved2"];
 
+  
   constructor(    private route: ActivatedRoute,
     private afs: AngularFirestore
     ) { 
       this.dbSkills= this.getUserSkills();
-
+      this.jobsMap = this.getJobsMap();
     }
 
   ngOnInit() {
@@ -46,13 +48,20 @@ export class JobLandingComponent implements OnInit {
 
   }
 
-  switchHeart(id){
-    console.log(id)
-    var selectedHeart = document.getElementById(id);
-    console.log(selectedHeart.innerHTML)
-    var temp = this.heart;
-    this.heart = this.oldHeart;
-    this.oldHeart = temp;
+  switchHeart(id: String){
+    var result = this.jobsCheck(id);
+
+    var jobsUpdate={};
+    jobsUpdate['jobsMap.'+id] = !result;
+    this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(jobsUpdate);
+    this.getJobsMap();
+  // var temp = this.heart;
+  // this.heart = this.oldHeart;
+  // this.oldHeart = temp;
+  } 
+
+  jobsCheck(job: String){
+    return this.jobsMap.get(job)
   }
 
   switchColumn(){
@@ -75,8 +84,18 @@ export class JobLandingComponent implements OnInit {
     if(option.isUserInput){
       console.log(option.source.value)
     }
-    console.log(this.dbSkills)
+    //console.log(this.dbSkills)
     
+  }
+
+  getJobsMap(): Map<String,any>{
+    const firestore = firebase.firestore();
+    firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(doc => {
+      this.jobsMap = this.getMap(doc.data().jobsMap);
+    }).catch(function(error) {
+      return null;
+    })
+    return new Map();
   }
 
   getUserSkills(): any[] {
