@@ -35,6 +35,7 @@ export class DialogSearchComponent implements OnInit{
   dbCourseMap: Map<string, {}>;
   @ViewChild('stepper') stepper: MatStepper;
   isSelected: number= 0;
+  dbCourseSkills: Map<any,any>;
 
   constructor(public dialogRef: MatDialogRef<DialogSearchComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,     
@@ -147,10 +148,9 @@ export class DialogSearchComponent implements OnInit{
       var objFirst = Object.entries(Array.from(this.dbCourseMap.values()))[index]
       var objSecond = objFirst[1]
       var finalMap = new Map(Object.entries(objSecond))
-      console.log(finalMap)
+      this.dbCourseMap = finalMap;
       this.courses = Array.from(finalMap.keys())
       this.stepper.next()
-      console.log(this.isSelected)
     }
   }
 
@@ -159,7 +159,20 @@ export class DialogSearchComponent implements OnInit{
       // skillsUpdate['skillsMap.'+option.value.toLowerCase()] = 0;
       // this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({courses: firebase.firestore.FieldValue.arrayUnion(option.value)});
+      
+      const array = this.dbCourseMap.get(option.value)
+      const iterator = Object.values(array);
+      var skillsUpdate={}
+      for (const value of iterator){
+        skillsUpdate['skillsMap.'+value] =0;
+        this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
+      }
+    //   var skillsUpdate={};
+    //   skillsUpdate['skillsMap.'+this.dbCourseMap.get(option.value)] = 0;
+    //   this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
     }
+    console.log(option.value)
+    console.log(this.dbCourseMap)
   }  
 
   getMap(map){
