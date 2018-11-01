@@ -156,8 +156,6 @@ export class DialogSearchComponent implements OnInit{
 
   courseSelection(option: MatListOption) {
     if(option.selected == true){     
-      // skillsUpdate['skillsMap.'+option.value.toLowerCase()] = 0;
-      // this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({courses: firebase.firestore.FieldValue.arrayUnion(option.value)});
       
       const array = this.dbCourseMap.get(option.value)
@@ -167,12 +165,7 @@ export class DialogSearchComponent implements OnInit{
         skillsUpdate['skillsMap.'+value] =0;
         this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
       }
-    //   var skillsUpdate={};
-    //   skillsUpdate['skillsMap.'+this.dbCourseMap.get(option.value)] = 0;
-    //   this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
     }
-    console.log(option.value)
-    console.log(this.dbCourseMap)
   }  
 
   getMap(map){
