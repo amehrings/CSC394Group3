@@ -118,15 +118,15 @@
                 </div>
                   <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search existing matches...">
                   <mat-list class = "scrollable">
-                    <div class = "row"  *ngFor = "let job of jobs">
+                    <div class = "row"  *ngFor = "let match of matches">
                         <div class="column">
                           <mat-list-item class="jobs">
-                            {{job}}
+                            {{match[0]}}
                           </mat-list-item>
                         </div>
                         <div class="column2">
                           <mat-list-item class="percentMatch">
-                           {{this.jobScores[this.jobs.indexOf(job)]}}% Match
+                           {{match[1]}}% Match
                           </mat-list-item>
                         </div>
                         <div class="column3">
