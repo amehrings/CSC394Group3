@@ -147,6 +147,7 @@ export class DialogSearchComponent implements OnInit{
       var objFirst = Object.entries(Array.from(this.dbCourseMap.values()))[index]
       var objSecond = objFirst[1]
       var finalMap = new Map(Object.entries(objSecond))
+      console.log(finalMap)
       this.courses = Array.from(finalMap.keys())
       this.stepper.next()
       console.log(this.isSelected)
@@ -158,7 +159,7 @@ export class DialogSearchComponent implements OnInit{
       // skillsUpdate['skillsMap.'+option.value.toLowerCase()] = 0;
       // this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({courses: firebase.firestore.FieldValue.arrayUnion(option.value)});
-    }    
+    }
   }  
 
   getMap(map){
