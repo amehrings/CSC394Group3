@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit{
        this.tempDegrees = degrees;
        console.log(this.tempDegrees);
        for(let i =0; i<this.tempDegrees.docs.length; i++){
+         console.log(this.tempDegrees.docs[i]);
          this.degrees[i] = this.tempDegrees.docs[i].id;
        }
      });

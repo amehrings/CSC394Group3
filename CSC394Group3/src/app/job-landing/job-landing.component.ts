@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app';
 import { AngularFirestore, QuerySnapshot } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {waitForMap} from "@angular/router/src/utils/collection";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class JobLandingComponent implements OnInit {
   dbSkillsRating: any[];
   dbMap: Map<String, any>;
   jobsMap: Map<String, any>;
+  jobSkills: Map<String, any[]> = new Map();
   dbCourses: any[];
 
   degrees: any[];
@@ -39,10 +41,12 @@ export class JobLandingComponent implements OnInit {
     ) { 
       this.dbSkills= this.getUserSkills();
       this.jobsMap = this.getJobsMap();
+    console.log(this.jobsMap);
     }
 
   ngOnInit() {
     this.jobs = this.getJobs();
+    console.log(this.jobSkills);
     this.degrees = this.getDegrees();
     this.choicesArray = this.degrees;
 
@@ -94,7 +98,7 @@ export class JobLandingComponent implements OnInit {
       this.jobsMap = this.getMap(doc.data().jobsMap);
     }).catch(function(error) {
       return null;
-    })
+    });
     return new Map();
   }
 
@@ -123,17 +127,32 @@ export class JobLandingComponent implements OnInit {
     return new Map(Object.entries(map))
   }
 
+  getMatchScore(job){
+    let matchScore = 0;
+    //console.log(this.jobSkills.get(job.replace(' ','_')));
+    let jobskill = this.jobSkills.get(job.replace(' ','_'));
+    console.log(jobskill);
+    for(let i=0; i<jobskill.length; i++){
+      if(jobskill[i][1] in this.dbSkills){
+        matchScore += 10;
+      }
+    }
+    return matchScore;
+  }
+
   getJobs(): any[]{
     const firestore = firebase.firestore();
     firestore.collection('/jobs').get().then((snapshot) =>{
       snapshot.forEach(snapshot => {
         // console.log(snapshot.id)
-        this.jobs.push(snapshot.id)
-        // console.log(snapshot.data())
+        this.jobs.push(snapshot.id);
+        //console.log(snapshot.data());
+        this.jobSkills.set(snapshot.id,Array.from(Object.entries(snapshot.data())));
+        //console.log(this.jobSkills);
         this.replaceWithSpace(this.jobs)
 
       })
-    })
+    });
     return [];
   }
 
