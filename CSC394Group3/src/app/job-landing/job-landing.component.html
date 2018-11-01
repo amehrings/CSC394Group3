@@ -101,8 +101,8 @@
                         </div>
                         <div class="column3">
                             <mat-list-item>
-                              <button mat-button class="btn" (click) = "switchHeart(job)" [value]="job" [id] = "job">
-                                <div  *ngIf="jobsCheck(job) == true; else selected">
+                              <button mat-button class="btn" (click) = "switchHeart(match[0])" [value]="match[0]" [id] = "match[0]">
+                                <div  *ngIf="jobsCheck(match[0]) == true; else selected">
                                   <i class="{{heart}}"></i>
                                 </div>
                                 <ng-template #selected>
