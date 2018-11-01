@@ -36,6 +36,7 @@ export class JobLandingComponent implements OnInit {
   degrees: any[];
   jobs: any[];
   saved: any[] = ["saved1", "saved2"];
+  matches: any[] = [];
 
   
   constructor(    private route: ActivatedRoute,
@@ -153,18 +154,25 @@ export class JobLandingComponent implements OnInit {
         this.replaceWithSpace(this.jobs)
 
       });
-      console.log(this.jobSkills);
+      //console.log(this.jobSkills);
       let jobskill = [];
       for(let i=0; i<this.jobs.length;i++){
         jobskill = this.jobSkills.get(this.jobs[i].replace(new RegExp(" ","g"),'_'));
-        console.log(this.jobs[i].replace(new RegExp(" ","g"),'_'));
-        console.log(jobskill);
+        //console.log(this.jobs[i].replace(new RegExp(" ","g"),'_'));
+        //console.log(jobskill);
         this.jobScores.push(this.getMatchScore(jobskill));
+        this.matches.push([this.jobs[i],this.jobScores[i]]);
       }
+      this.matches.sort(this.Comparator);
+      console.log(this.matches);
     });
     return [];
   }
-
+  Comparator(a,b){
+    if (a[1] < b[1]) return 1;
+    if (a[1] > b[1]) return -1;
+    return 0;
+  }
   getDegrees(): any[]{
     const firestore = firebase.firestore();
     firestore.collection('/degrees').get().then((snapshot) =>{
