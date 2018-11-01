@@ -1,8 +1,6 @@
 .searchBar{
     //width: 975px;
-    width: 85%;
-    margin-left: 5%;
-    margin-right: 5%;
+    width: 95%;
     border-radius: 15px;
     border: 1px #000 solid;
     padding: 10px;
@@ -17,10 +15,18 @@
 
 .scrollable{
     margin-top: 25px;
-    min-height: 320px;
-    height: 320px;
+    min-height: 600px;
+    height: 600px;
+    width: 100%;
     overflow-y: scroll;
-    width: 90%;
+    display: inline-block;
+}
+
+.scrollableYourSearch{
+    width: 100%;
+    min-height: 600px;
+    height: 600px;
+    overflow-y: scroll;
     display: inline-block;
 }
 
