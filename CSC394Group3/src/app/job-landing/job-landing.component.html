@@ -1,68 +1,80 @@
 <div class = "wrapper">
-  <div class = "select">
-  <div class = "selectRow">
-    <div class = "firstSelectColumn">
-    <mat-form-field>
-      <mat-select placeholder="{{firstColumn}}" [(ngModel)]="selectedValue" >
-        <mat-option *ngFor = "let choices of choicesArray" id="choiceSelect" [value] ="choices" (onSelectionChange)="performMatch($event)">
-          {{choices}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="switch">
-      <button (click)="switchColumn()" mat-raised-button color="basic">
-        <i class="fa fa-arrows-h"></i>
-      </button>
-  </div>
-  <div class = "secondSelectColumn">
-      <h3 class = "h3Text">{{secondColumn}}</h3>
-    </div>
-    <div class = "thirdColumnSaved">
-        <mat-form-field>
-          <mat-select placeholder="saved searches">
-            <mat-option *ngFor = "let savedSearch of saved" [value] ="savedSearch">
-              {{savedSearch}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-  </div>
-</div>
-  <div>
-    <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search existing matches...">
-  </div>
-  <mat-list class = "scrollable">
-    <div class = "row"  *ngFor = "let job of jobs">
-        <div class="column">
-          <mat-list-item class="jobs">
-            {{job}}
-          </mat-list-item>
-        </div>
-        <div class="column2">
-          <mat-list-item class="percentMatch">
-           {{num}}% Match
-          </mat-list-item>
-        </div>
-        <div class="column3">
-            <mat-list-item>
-              <button mat-button class="btn" (click) = "switchHeart(job)" [value]="job" [id] = "job">
-                <div  *ngIf="jobsCheck(job) == true; else selected">
-                  <i class="{{heart}}"></i>
-                </div>
-                <ng-template #selected>
-                  <i class="{{noHeart}}"></i>
-                </ng-template>
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          General Search
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+          Type your name and age
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+          <div class = "select">
+          <div class = "selectRow">
+            <div class = "firstSelectColumn">
+            <mat-form-field>
+              <mat-select placeholder="{{firstColumn}}" [(ngModel)]="selectedValue" >
+                <mat-option *ngFor = "let choices of choicesArray" id="choiceSelect" [value] ="choices" (onSelectionChange)="performMatch($event)">
+                  {{choices}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="switch">
+              <button (click)="switchColumn()" mat-raised-button color="basic">
+                <i class="fa fa-arrows-h"></i>
               </button>
-            </mat-list-item>
+          </div>
+          <div class = "secondSelectColumn">
+              <h3 class = "h3Text">{{secondColumn}}</h3>
+            </div>
+            <div class = "thirdColumnSaved">
+                <mat-form-field>
+                  <mat-select placeholder="saved searches">
+                    <mat-option *ngFor = "let savedSearch of saved" [value] ="savedSearch">
+                      {{savedSearch}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+          </div>
         </div>
-        <div class="column4">
-            <mat-list-item class="seeMore">
-              <button mat-flat-button color="basic" style="margin: auto;">See More</button>
-            </mat-list-item>
-        </div>
-    </div>
-  </mat-list>
-
-
+          <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search existing matches...">
+          <mat-list class = "scrollable">
+            <div class = "row"  *ngFor = "let job of jobs">
+                <div class="column">
+                  <mat-list-item class="jobs">
+                    {{job}}
+                  </mat-list-item>
+                </div>
+                <div class="column2">
+                  <mat-list-item class="percentMatch">
+                   {{num}}% Match
+                  </mat-list-item>
+                </div>
+                <div class="column3">
+                    <mat-list-item>
+                      <button mat-button class="btn" (click) = "switchHeart(job)" [value]="job" [id] = "job">
+                        <div  *ngIf="jobsCheck(job) == true; else selected">
+                          <i class="{{heart}}"></i>
+                        </div>
+                        <ng-template #selected>
+                          <i class="{{noHeart}}"></i>
+                        </ng-template>
+                      </button>
+                    </mat-list-item>
+                </div>
+                <div class="column4">
+                    <mat-list-item class="seeMore">
+                      <button mat-flat-button color="basic" style="margin: auto;">See More</button>
+                    </mat-list-item>
+                </div>
+            </div>
+          </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
+
+
+
+
