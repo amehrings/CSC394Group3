@@ -5,6 +5,7 @@ import { AngularFirestore, QuerySnapshot } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {waitForMap} from "@angular/router/src/utils/collection";
+import {forEach} from "@angular-devkit/schematics";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class JobLandingComponent implements OnInit {
   dbMap: Map<String, any>;
   jobsMap: Map<String, any>;
   jobSkills: Map<String, any[]> = new Map();
+  jobScores: any[] = [];
   dbCourses: any[];
 
   degrees: any[];
@@ -127,13 +129,12 @@ export class JobLandingComponent implements OnInit {
     return new Map(Object.entries(map))
   }
 
-  getMatchScore(job){
+  getMatchScore(jobskill){
     let matchScore = 0;
     //console.log(this.jobSkills.get(job.replace(' ','_')));
-    let jobskill = this.jobSkills.get(job.replace(' ','_'));
-    console.log(jobskill);
+
     for(let i=0; i<jobskill.length; i++){
-      if(jobskill[i][1] in this.dbSkills){
+      if(this.dbSkills.includes(jobskill[i][1].toLowerCase())){
         matchScore += 10;
       }
     }
@@ -151,7 +152,15 @@ export class JobLandingComponent implements OnInit {
         //console.log(this.jobSkills);
         this.replaceWithSpace(this.jobs)
 
-      })
+      });
+      console.log(this.jobSkills);
+      let jobskill = [];
+      for(let i=0; i<this.jobs.length;i++){
+        jobskill = this.jobSkills.get(this.jobs[i].replace(new RegExp(" ","g"),'_'));
+        console.log(this.jobs[i].replace(new RegExp(" ","g"),'_'));
+        console.log(jobskill);
+        this.jobScores.push(this.getMatchScore(jobskill));
+      }
     });
     return [];
   }
