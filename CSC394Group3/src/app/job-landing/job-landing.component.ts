@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase/app';
-import { AngularFirestore, QuerySnapshot } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import {waitForMap} from "@angular/router/src/utils/collection";
-import {forEach} from "@angular-devkit/schematics";
-
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-job-landing',
@@ -44,12 +39,10 @@ export class JobLandingComponent implements OnInit {
     ) { 
       this.dbSkills= this.getUserSkills();
       this.jobsMap = this.getJobsMap();
-    console.log(this.jobsMap);
     }
 
   ngOnInit() {
     this.jobs = this.getJobs();
-    console.log(this.jobSkills);
     this.degrees = this.getDegrees();
     this.choicesArray = this.jobs;
 
@@ -62,9 +55,6 @@ export class JobLandingComponent implements OnInit {
     jobsUpdate['jobsMap.'+id] = !result;
     this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(jobsUpdate);
     this.getJobsMap();
-  // var temp = this.heart;
-  // this.heart = this.oldHeart;
-  // this.oldHeart = temp;
   } 
 
   jobsCheck(job: String){
@@ -139,7 +129,6 @@ export class JobLandingComponent implements OnInit {
         matchScore += 10 * (<number> this.dbMap.get(jobskill[i][1].toLowerCase()));
       }
     }
-    console.log(matchScore);
     matchScore = Math.round((matchScore/500) * 100);
     return matchScore;
   }
@@ -148,25 +137,18 @@ export class JobLandingComponent implements OnInit {
     const firestore = firebase.firestore();
     firestore.collection('/jobs').get().then((snapshot) =>{
       snapshot.forEach(snapshot => {
-        // console.log(snapshot.id)
         this.jobs.push(snapshot.id);
-        //console.log(snapshot.data());
         this.jobSkills.set(snapshot.id,Array.from(Object.entries(snapshot.data())));
-        //console.log(this.jobSkills);
         this.replaceWithSpace(this.jobs)
 
       });
-      //console.log(this.jobSkills);
       let jobskill = [];
       for(let i=0; i<this.jobs.length;i++){
         jobskill = this.jobSkills.get(this.jobs[i].replace(new RegExp(" ","g"),'_'));
-        //console.log(this.jobs[i].replace(new RegExp(" ","g"),'_'));
-        //console.log(jobskill);
         this.jobScores.push(this.getMatchScore(jobskill));
         this.matches.push([this.jobs[i],this.jobScores[i]]);
       }
       this.matches.sort(this.Comparator);
-      console.log(this.matches);
     });
     return [];
   }
@@ -179,9 +161,7 @@ export class JobLandingComponent implements OnInit {
     const firestore = firebase.firestore();
     firestore.collection('/degrees').get().then((snapshot) =>{
       snapshot.forEach(snapshot => {
-        // console.log(snapshot.id)
         this.degrees.push(snapshot.id)
-        // console.log(snapshot.data())
         this.replaceWithSpace(this.degrees)
       })
     })
@@ -191,7 +171,6 @@ export class JobLandingComponent implements OnInit {
   replaceWithSpace(a: Array<any>): any[]{
     for (var i = 0; i < a.length; i++){
       a[i] = a[i].replace('_', ' ');
-      // console.log(a[i])
     }
     return a;
   }
