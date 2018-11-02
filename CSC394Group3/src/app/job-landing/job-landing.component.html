@@ -40,7 +40,6 @@
               </div>
           </div>
         </div>
-          <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search existing matches...">
           <mat-list class = "scrollable">
             <div class = "row"  *ngFor = "let job of jobs" >
                 <div class="column">

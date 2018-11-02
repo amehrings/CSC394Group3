@@ -15,8 +15,8 @@ import {forEach} from "@angular-devkit/schematics";
 })
 export class JobLandingComponent implements OnInit {
 
-  firstColumn = 'Degrees';
-  secondColumn = 'Jobs';
+  firstColumn = 'Jobs';
+  secondColumn = 'Degrees';
   choicesArray: any;
   flag: boolean = true;
   selectedValue;
@@ -51,7 +51,7 @@ export class JobLandingComponent implements OnInit {
     this.jobs = this.getJobs();
     console.log(this.jobSkills);
     this.degrees = this.getDegrees();
-    this.choicesArray = this.degrees;
+    this.choicesArray = this.jobs;
 
   }
 
@@ -77,11 +77,11 @@ export class JobLandingComponent implements OnInit {
     this.secondColumn = temp;
 
     if (this.flag == true){
-      this.choicesArray = this.jobs;
+      this.choicesArray = this.degrees;
       this.selectedValue = undefined;
       this.flag = false;
     } else {
-      this.choicesArray = this.degrees;
+      this.choicesArray = this.jobs;
       this.selectedValue = undefined;
       this.flag = true;
     }
