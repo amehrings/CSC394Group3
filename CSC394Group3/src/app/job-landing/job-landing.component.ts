@@ -136,9 +136,11 @@ export class JobLandingComponent implements OnInit {
 
     for(let i=0; i<jobskill.length; i++){
       if(this.dbSkills.includes(jobskill[i][1].toLowerCase())){
-        matchScore += 10;
+        matchScore += 10 * (<number> this.dbMap.get(jobskill[i][1].toLowerCase()));
       }
     }
+    console.log(matchScore);
+    matchScore = Math.round((matchScore/500) * 100);
     return matchScore;
   }
 
