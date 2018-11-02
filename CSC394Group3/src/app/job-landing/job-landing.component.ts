@@ -56,7 +56,7 @@ export class JobLandingComponent implements OnInit {
   ngOnInit() {
     this.jobs = this.getJobs();
     this.degrees = this.getDegrees();
-    this.choicesArray = this.jobs;
+    this.choicesArray = this.degrees;
 
   }
 
