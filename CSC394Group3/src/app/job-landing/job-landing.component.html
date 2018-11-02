@@ -41,21 +41,21 @@
           </div>
         </div>
           <mat-list class = "scrollable">
-            <div class = "row"  *ngFor = "let job of jobs" >
-                <div class="column">
-                  <mat-list-item class="jobs">
-                    {{job}}
-                  </mat-list-item>
-                </div>
-                <div class="column2" >
-                  <mat-list-item class="percentMatch">
-                   {{num}}% Match
-                  </mat-list-item>
-                </div>
+              <div class = "row"  *ngFor = "let degreeMatch of degreeMatches">
+                  <div class="column">
+                    <mat-list-item class="jobs">
+                      {{degreeMatch[0]}}
+                    </mat-list-item>
+                  </div>
+                  <div class="column2">
+                    <mat-list-item class="percentMatch">
+                     {{degreeMatch[1]}}% Match
+                    </mat-list-item>
+                  </div>
                 <div class="column3">
                     <mat-list-item>
-                      <button mat-button class="btn" (click) = "switchHeart(job)" [value]="job" [id] = "job">
-                        <div  *ngIf="jobsCheck(job) == true; else selected">
+                      <button mat-button class="btn" (click) = "switchHeart(degreeMatch[0])" [value]="degreeMatch[0]" [id] = "degreeMatch[0]">
+                        <div  *ngIf="jobsCheck(degreeMatch[0]) == true; else selected">
                           <i class="{{heart}}"></i>
                         </div>
                         <ng-template #selected>

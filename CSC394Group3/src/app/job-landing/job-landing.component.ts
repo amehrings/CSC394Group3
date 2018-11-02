@@ -10,8 +10,10 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class JobLandingComponent implements OnInit {
 
-  firstColumn = 'Jobs';
-  secondColumn = 'Degrees';
+  firstColumn = 'Computer Science';
+  secondColumn = 'Jobs';
+  switchCount = 0;
+
   choicesArray: any;
   flag: boolean = true;
   selectedValue;
@@ -28,10 +30,19 @@ export class JobLandingComponent implements OnInit {
   jobScores: any[] = [];
   dbCourses: any[];
 
+  finalArraySkills: any[];
+  newFinalArraySkills: any[];
+  
+  concentrations: any[];
+  courses: any[];
   degrees: any[];
   jobs: any[];
   saved: any[] = ["saved1", "saved2"];
   matches: any[] = [];
+  degreeMatches: any[] = [];
+  degreeScores: any[] = [];
+  dbCourseMap: Map<string, {}>;
+
 
   
   constructor(    private route: ActivatedRoute,
@@ -39,6 +50,7 @@ export class JobLandingComponent implements OnInit {
     ) { 
       this.dbSkills= this.getUserSkills();
       this.jobsMap = this.getJobsMap();
+      this.getDegreeSkills();
     }
 
   ngOnInit() {
@@ -48,41 +60,38 @@ export class JobLandingComponent implements OnInit {
 
   }
 
-  switchHeart(id: String){
-    var result = this.jobsCheck(id);
-
-    var jobsUpdate={};
-    jobsUpdate['jobsMap.'+id] = !result;
-    this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(jobsUpdate);
-    this.getJobsMap();
-  } 
+  
 
   jobsCheck(job: String){
     return this.jobsMap.get(job)
   }
 
   switchColumn(){
-    var temp = this.firstColumn;    
-    this.firstColumn = this.secondColumn;
-    this.secondColumn = temp;
+    if(this.switchCount == 0){
+      this.firstColumn = this.secondColumn;
+      this.secondColumn = "Degrees";
+    }else{
+      var temp = this.firstColumn;    
+      this.firstColumn = this.secondColumn;
+      this.secondColumn = temp;
+    }
 
     if (this.flag == true){
-      this.choicesArray = this.degrees;
+      this.choicesArray = this.jobs;
       this.selectedValue = undefined;
       this.flag = false;
     } else {
-      this.choicesArray = this.jobs;
+      this.choicesArray = this.degrees;
       this.selectedValue = undefined;
       this.flag = true;
     }
+    this.switchCount++;
   }
 
   performMatch(option){
     if(option.isUserInput){
-      console.log(option.source.value)
-    }
-    //console.log(this.dbSkills)
-    
+      this.getNewDegreeSkills(option.source.value)
+    }    
   }
 
   getJobsMap(): Map<String,any>{
@@ -108,29 +117,47 @@ export class JobLandingComponent implements OnInit {
     return [];
   }
 
-  getKeys(map){
-    return Array.from(this.getMap(map).keys())
-  }
+  getDegreeSkills(){
+    const firestore = firebase.firestore();
 
-  getValues(map){
-    return Array.from(this.getMap(map).values())
-  }
-
-  getMap(map){
-    return new Map(Object.entries(map))
-  }
-
-  getMatchScore(jobskill){
-    let matchScore = 0;
-    //console.log(this.jobSkills.get(job.replace(' ','_')));
-
-    for(let i=0; i<jobskill.length; i++){
-      if(this.dbSkills.includes(jobskill[i][1].toLowerCase())){
-        matchScore += 10 * (<number> this.dbMap.get(jobskill[i][1].toLowerCase()));
+    firestore.collection('/degrees').doc(this.underscoreFix("Computer_Science")).get().then(doc => {
+      if(doc.data().courses){
+        this.courses = doc.data().courses;
+      }else{
+        this.concentrations = this.getKeys(this.getMap(doc.data()))
+        this.courses = this.getValues(this.getMap(doc.data()))
+        this.finalArraySkills = this.getDegreeSkillsFinal(this.getMap(doc.data()))
       }
-    }
-    matchScore = Math.round((matchScore/500) * 100);
-    return matchScore;
+    })
+  }
+
+  getNewDegreeSkills(name){
+    const firestore = firebase.firestore();
+
+    firestore.collection('/degrees').doc(this.underscoreFix(name)).get().then(doc => {
+      if(doc.data().courses){
+        this.courses = doc.data().courses;
+      }else{
+        this.concentrations = this.getKeys(this.getMap(doc.data()))
+        this.courses = this.getValues(this.getMap(doc.data()))
+        this.finalArraySkills = this.getDegreeSkillsFinal(this.getMap(doc.data()))
+      }
+
+      var degreeSkill = [];
+      for(let i=0; i<this.jobs.length;i++){
+        degreeSkill = this.jobSkills.get(this.jobs[i].replace(new RegExp(" ","g"),'_'));
+        this.degreeMatches[i] = [this.jobs[i], this.getDegreeScore(degreeSkill)]
+      }
+      this.degreeMatches.sort(this.Comparator);
+    })
+  }
+
+  getDegreeSkillsFinal(map){
+    var objFirst = Object.entries(Array.from(map.values()))[0]
+    var objSecond = objFirst[1]
+    var finalMap = new Map(Object.entries(objSecond))
+    var merged = [].concat.apply([], Array.from(finalMap.values()))
+    return this.removeDuplicates(merged)
   }
 
   getJobs(): any[]{
@@ -149,14 +176,83 @@ export class JobLandingComponent implements OnInit {
         this.matches.push([this.jobs[i],this.jobScores[i]]);
       }
       this.matches.sort(this.Comparator);
+
+      let degreeskill = [];
+      for(let i=0; i<this.jobs.length;i++){
+        degreeskill = this.jobSkills.get(this.jobs[i].replace(new RegExp(" ","g"),'_'));
+        this.degreeScores.push(this.getDegreeScore(degreeskill));
+        this.degreeMatches.push([this.jobs[i],this.degreeScores[i]]);
+      }
+      this.degreeMatches.sort(this.Comparator);
     });
     return [];
   }
+
+  getKeys(map){
+    return Array.from(this.getMap(map).keys())
+  }
+
+  getValues(map){
+    return Array.from(this.getMap(map).values())
+  }
+
+  getMap(map){
+    return new Map(Object.entries(map))
+  }
+
+  getMatchScore(jobskill){
+    let matchScore = 0;
+    for(let i=0; i<jobskill.length; i++){
+      if(this.dbSkills.includes(jobskill[i][1].toLowerCase())){
+        matchScore += 10 * (<number> this.dbMap.get(jobskill[i][1].toLowerCase()));
+      }
+    }
+    matchScore = Math.round((matchScore/500) * 100);
+    return matchScore;
+  }
+
+  getDegreeScore(jobskill){
+    let matchScore = 0;
+    for(let i=0; i<jobskill.length; i++){
+      if(this.finalArraySkills.includes(jobskill[i][1])){
+        matchScore += 10;
+      }
+    }
+    return matchScore;
+  }
+
+  switchHeart(id: String){
+    var result = this.jobsCheck(id);
+
+    var jobsUpdate={};
+    jobsUpdate['jobsMap.'+id] = !result;
+    this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(jobsUpdate);
+    this.getJobsMap();
+  } 
+
+  removeDuplicates(arr){
+    let unique_array = []
+    for(let i = 0;i < arr.length; i++){
+        if(unique_array.indexOf(arr[i]) == -1){
+            unique_array.push(arr[i])
+        }
+    }
+    return unique_array
+  }
+
+  underscoreFix(s: string): string{
+    for (var i = 0; i < s.length; i++){
+      s = s.replace(' ', '_');
+    }
+    return s;
+  }
+
   Comparator(a,b){
     if (a[1] < b[1]) return 1;
     if (a[1] > b[1]) return -1;
     return 0;
   }
+  
   getDegrees(): any[]{
     const firestore = firebase.firestore();
     firestore.collection('/degrees').get().then((snapshot) =>{

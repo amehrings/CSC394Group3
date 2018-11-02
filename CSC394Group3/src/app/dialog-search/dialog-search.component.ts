@@ -128,12 +128,8 @@ export class DialogSearchComponent implements OnInit{
 
   getCourseMap(map){
     var objFirst = Object.entries(Array.from(map.values()))[0]
-    var test = map
-    console.log(test)
     var objSecond = objFirst[1]
-    console.log(objSecond)
     var finalMap = new Map(Object.entries(objSecond))
-    console.log(finalMap)
     return finalMap
   }
 
