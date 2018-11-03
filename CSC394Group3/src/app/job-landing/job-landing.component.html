@@ -41,6 +41,7 @@
           </div>
         </div>
           <mat-list class = "scrollable">
+            <div *ngIf="degreeMatches.length > 0; else pleaseSearch">
               <div class = "row"  *ngFor = "let degreeMatch of degreeMatches">
                   <div class="column">
                     <mat-list-item class="jobs">
@@ -70,6 +71,10 @@
                     </mat-list-item>
                 </div>
             </div>
+          </div>
+          <ng-template #pleaseSearch>
+              <h3>Please select an option from the list</h3>
+            </ng-template>
           </mat-list>
     </mat-expansion-panel>
   </mat-accordion>
