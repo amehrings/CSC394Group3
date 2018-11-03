@@ -99,46 +99,6 @@ export class JobLandingComponent implements OnInit {
     }
   }
 
-  getCourseMap(){
-    var degreeMap = [];
-    const firestore = firebase.firestore();
-    firestore.collection('/degrees').get().then((snapshot) =>{
-      snapshot.forEach(doc => {
-        //degreeMap.push(Array.from(Object.entries(doc.data())));
-        this.mapTools(this.getMap(doc.data()), doc.id)
-      })
-    })
-
-  }
-
-  mapTools(map, id){
-    if(id === "Business_Information_Technology" || id === "Computational_Finance" || id === "Computer_Science"){
-      var objFirst = Object.entries(Array.from(map.values()))[0]
-      //console.log(objFirst)
-      try{
-        var objSecond = objFirst[1]
-        var finalMap = new Map(Object.entries(objSecond))
-        //console.log(finalMap)
-        var merged = [].concat.apply([], Array.from(finalMap.values()))
-        //console.log(merged)
-        //console.log(this.removeDuplicates(merged))
-        this.finalDegreeSkills.push(this.removeDuplicates(merged))
-        //console.log(this.finalDegreeSkills)
-
-      }catch (e){
-
-      }
-      
-      //console.log(objSecond)
-    } else{
-      this.finalDegreeSkills.push([])
-    }
-    //var objFirst = Object.entries(Array.from(map.values()))[0]
-    //var objSecond = objFirst[1]
-    //var finalMap = new Map(Object.entries(objSecond))
-    //return finalMap
-  }
-  
   //Degree to Jobs
   
   getDegreeSkillsFinal(map){
@@ -189,8 +149,6 @@ export class JobLandingComponent implements OnInit {
     }
 
     this.jobChecker = jobChecker;
-    //console.log(this.jobChecker)
-    // let jobskill = [];
     for(let i=0; i<this.degrees.length;i++){
       this.degreeMatches[i] = [this.degrees[i], this.getJobScore(this.finalDegreeSkills[i])]
     }
@@ -199,17 +157,41 @@ export class JobLandingComponent implements OnInit {
   }
 
   getJobScore(jobskill){
-    console.log(this.jobChecker)
-    console.log(jobskill)
     let matchScore = 0;
-    for(var i = 0; i < jobskill.length; i++) {
-      //for(var j = 0; j < jobskill[i].length; j++) {
-      
+    for(var i = 0; i < jobskill.length; i++) {      
       if(this.jobChecker.includes(jobskill[i])){
           matchScore += 10;
       }
   }    return matchScore;
   }
+
+  getCourseMap(){
+    const firestore = firebase.firestore();
+    firestore.collection('/degrees').get().then((snapshot) =>{
+      snapshot.forEach(doc => {
+        this.mapTools(this.getMap(doc.data()), doc.id)
+      })
+    })
+
+  }
+
+  mapTools(map, id){
+    if(id === "Business_Information_Technology" || id === "Computational_Finance" || id === "Computer_Science"){
+      var objFirst = Object.entries(Array.from(map.values()))[0]
+      try{
+        var objSecond = objFirst[1]
+        var finalMap = new Map(Object.entries(objSecond))
+        var merged = [].concat.apply([], Array.from(finalMap.values()))
+        this.finalDegreeSkills.push(this.removeDuplicates(merged))
+
+      }catch (e){
+
+      }
+    } else{
+      this.finalDegreeSkills.push([])
+    }
+  }
+  
   
 
 
@@ -269,14 +251,6 @@ export class JobLandingComponent implements OnInit {
         this.matches.push([this.jobs[i],this.jobScores[i]]);
       }
       this.matches.sort(this.Comparator);
-
-      // let degreeskill = [];
-      // for(let i=0; i<this.jobs.length;i++){
-      //   degreeskill = this.jobSkills.get(this.jobs[i].replace(new RegExp(" ","g"),'_'));
-      //   this.degreeScores.push(this.getDegreeScore(degreeskill));
-      //   this.degreeMatches.push([this.jobs[i],this.degreeScores[i]]);
-      // }
-      // this.degreeMatches.sort(this.Comparator);
     });
     return [];
   }

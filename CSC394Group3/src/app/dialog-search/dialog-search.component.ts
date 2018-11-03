@@ -158,7 +158,8 @@ export class DialogSearchComponent implements OnInit{
       const iterator = Object.values(array);
       var skillsUpdate={}
       for (const value of iterator){
-        skillsUpdate['skillsMap.'+value] =0;
+        console.log(String(value).toLowerCase())
+        skillsUpdate['skillsMap.'+(String(value).toLowerCase())] =0;
         this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
       }
     }

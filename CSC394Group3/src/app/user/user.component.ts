@@ -123,8 +123,11 @@ export class UserComponent implements OnInit{
     }
   }
   starHandler(skill: String, num: Number){
+    console.log(skill)
+    console.log(num)
     var skillsUpdate={};
     skillsUpdate['skillsMap.'+skill.toLowerCase()] = num;
+    console.log(skillsUpdate)
     this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
     this.getUserSkills();
   }
