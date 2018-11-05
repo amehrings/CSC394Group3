@@ -22,6 +22,15 @@ export class JobLandingComponent implements OnInit {
 
   selectedJob: string;
 
+  filledOutDBDegrees: any[] = [ "Business_Information_Technology",
+                                "Computational_Finance",
+                                "Computer_Science",
+                                "Cybersecurity",
+                                "E-Commerce_Technology",
+                                "Game_Programming",
+                                "Information_Systems",
+                                "Software_Engineering" ]
+
   dbSkills: any[];
   dbSkillsRating: any[];
   dbMap: Map<String, any>;
@@ -132,6 +141,7 @@ export class JobLandingComponent implements OnInit {
       }
 
       var degreeSkill = [];
+      console.log(this.finalArraySkills)
       for(let i=0; i<this.jobs.length;i++){
         degreeSkill = this.jobSkills.get(this.jobs[i].replace(new RegExp(" ","g"),'_'));
         this.degreeMatches[i] = [this.jobs[i], this.getDegreeScore(degreeSkill)]
@@ -172,18 +182,52 @@ export class JobLandingComponent implements OnInit {
         this.mapTools(this.getMap(doc.data()), doc.id)
       })
     })
+    console.log(this.finalDegreeSkills)
+  }
 
+  objectParse(map){
+    var myArray = Array.from(map.values())
+    console.log(myArray)
+    var newArray = [];
+    
+    for (let i = 0; i < myArray.length; i++){
+      myArray[i] = new Map(Object.entries(myArray[i]));
+      //newArray.push(myArray[i].get("CNS 440 Information Security Management"))
+    }
+    return newArray;
   }
 
   mapTools(map, id){
-    if(id === "Business_Information_Technology" || id === "Computational_Finance" || id === "Computer_Science"){
+    // if(id === "Cybersecurity"){
+    //   var finalSkills = this.objectParse(map)
+    //   var objFirst = Object.entries(Array.from(map.values()))[4]
+    //   try{
+    //     var objSecond = objFirst[1]
+    //     var finalMap = new Map(Object.entries(objSecond))
+    //     var merged = [].concat.apply([], Array.from(finalMap.values()))
+    //     this.finalDegreeSkills.push(this.removeDuplicates(merged))
+    //   }catch (e){
+
+    //   }
+    // }
+    //Temporary if because of multiple concentrations
+    if(id === "Information_Systems" || id === "Software_Engineering"){
+      var objFirst = Object.entries(Array.from(map.values()))[4]
+      try{
+        var objSecond = objFirst[1]
+        var finalMap = new Map(Object.entries(objSecond))
+        var merged = [].concat.apply([], Array.from(finalMap.values()))
+        this.finalDegreeSkills.push(this.removeDuplicates(merged))
+      }catch (e){
+
+      }
+    }else if(this.filledOutDBDegrees.includes(id)){
       var objFirst = Object.entries(Array.from(map.values()))[0]
       try{
         var objSecond = objFirst[1]
         var finalMap = new Map(Object.entries(objSecond))
         var merged = [].concat.apply([], Array.from(finalMap.values()))
         this.finalDegreeSkills.push(this.removeDuplicates(merged))
-
       }catch (e){
 
       }
