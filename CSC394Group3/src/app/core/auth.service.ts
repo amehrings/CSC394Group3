@@ -16,7 +16,7 @@ export class AuthService {
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore, public router: Router) {                 
     this.user$ = this.afAuth.authState.pipe(switchMap(user => {
       if(user){
-        return this.afs.doc<User>('users/${user.userId').valueChanges()
+        return this.afs.collection('users').doc(firebase.auth().currentUser.uid).valueChanges()
       } else{
         return observableOf(null)
       }

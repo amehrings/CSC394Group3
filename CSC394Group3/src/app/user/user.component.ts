@@ -50,6 +50,13 @@ export class UserComponent implements OnInit{
         this.createForm(this.user.name);
       }
     });
+
+    console.log(this.userService.getCurrentUser());
+
+    this.userService.updateCurrentUser("Aaron")
+
+    console.log(this.userService.getCurrentUser());
+
   }
   
   getUserSkills(): any[] {
@@ -141,10 +148,10 @@ export class UserComponent implements OnInit{
     this.getUserSkills();
   }
 
-  // save(value) {
-  //   this.userService.updateCurrentUser(value)
-  //   .then(res => {
-  //     console.log(res);
-  //   }, err => console.log(err));
-  // }
+  save(value) {
+    this.userService.updateCurrentUser(value)
+    .then(res => {
+      console.log(res);
+    }, err => console.log(err));
+  }
 }

@@ -21,6 +21,8 @@ import { NavComponent } from './nav/nav.component';
 import { skillsSearchService } from './skills-search.service';
 import { DialogSearchComponent } from './dialog-search/dialog-search.component';
 import { JobLandingComponent } from './job-landing/job-landing.component';
+import { AdminGuard } from './core/admin.guard';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -33,7 +35,8 @@ import { JobLandingComponent } from './job-landing/job-landing.component';
     UserComponent,
     NavComponent,
     DialogSearchComponent,
-    JobLandingComponent  
+    JobLandingComponent,
+    AdminComponent  
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,7 @@ import { JobLandingComponent } from './job-landing/job-landing.component';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService],
+  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService, AdminGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogSearchComponent]
 })
