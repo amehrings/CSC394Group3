@@ -1,0 +1,35 @@
+.tabs{
+    margin-bottom: 10px;
+}
+
+::ng-deep .mat-tab-body-wrapper{
+    margin-top: 10px;
+}
+
+.searchBar{
+    width: 680px;
+    border-radius: 15px;
+    border: 1px #000 solid;
+    padding: 10px;
+  }
+
+
+  .scrollable{
+    min-height: 600px;
+    height: 600px;
+    overflow-y: scroll;
+  }
+
+.skillSearch{
+    min-height: 850px;
+    height: 850px;
+}
+
+.mat-expansion-panel-header {
+    height: 48px;
+  }
+  .mat-expansion-panel-content:not(.mat-expanded) {
+    .mat-expansion-panel-body {
+      padding-bottom: 0;
+    }
+  }

@@ -1,0 +1,20 @@
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="loginForm">
+        <p>Login to continue</p>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="email" formControlName="email" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="password" formControlName="password" required>
+          <label class="mat-error">{{errorMessage}}</label>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" type="submit" (click)="tryLogin(loginForm.value)">Login</button>
+        <p>No account yet? <a href="/register">Create an account</a></p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

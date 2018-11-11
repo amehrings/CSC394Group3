@@ -1,0 +1,17 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write;
+    }
+    
+    match /posts/userPost {
+    	//allow read, write;
+    	function getRole(role){
+      	return get(/databases/$(database)/documents/users/$(request.auth.userId)).data.roles[role]
+      }
+      allow read: if getRole('student') == true;
+      allow update: if getRole('faculty') == true;
+      allow create, read, update, delete: if getRole('admin') == true;
+    }
+  }
+}

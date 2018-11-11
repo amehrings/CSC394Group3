@@ -1,0 +1,126 @@
+
+
+section {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 50px;
+  margin-right: 10%;
+}
+
+.stockPhoto{
+  width: 750px;
+  height: 500px;
+}
+.img{
+  float: left;
+  width: 50%;
+}
+
+.yourSkills{
+  float: right;
+  width: 50%;
+  width: 700px;
+}
+
+h1{
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.scrollable{
+  min-height: 300px;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.skillsButton{
+  margin-top: 15px;
+}
+
+.row{
+  display: flex;
+}
+
+.column {
+  flex: 70%;
+  padding: 10px;
+}
+
+.column:hover .column3{
+    opacity: 1;
+}
+
+.column2 {
+  flex: 30%;
+  padding:10px;
+  background-color: rgb(250, 250, 250)
+}
+
+.column3 {
+  padding: 2px;
+  opacity: 0;
+  margin-left: auto;
+  margin-bottom: 10px;
+}
+
+.remove{
+  height: 40px;
+  width: 40px;
+}
+
+.fa-remove{
+  text-align: center;
+}
+.removeDiv{
+  text-align: center;
+  width: 50%;
+}
+
+//Star Formatting
+.skillItem{
+  margin: auto;
+}
+
+fieldset, label { margin: 0; padding: 0; }
+body{ margin: 20px; }
+h1 { font-size: 1.5em; margin: 10px; }
+
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 3px;
+  font-size: 1.5em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .altSavedLabel,
+.rating > .newLabel,
+{
+  color: #ddd;
+  float: right;
+}
+
+.rating > .savedLabel {
+  color: #FFD700;
+  float: right;
+}
+
+.rating > input:checked ~ .altSavedLabel,
+ {
+  color: #ddd;
+  float: right;
+}
+
+
+.rating > input:checked ~ .newLabel,
+.rating > input:checked ~ .altSavedLabel,
+.rating:not(:checked) > .newLabel:hover,
+.rating:not(:checked) > .altSavedLabel:hover,
+.rating:not(:checked) > .newLabel:hover ~ label,
+.rating:not(:checked) > .savedLabel:hover ~ label,
+.rating:not(:checked) > .altSavedLabel:hover ~ label { color: #FFD700;  }
