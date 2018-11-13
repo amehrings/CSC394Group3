@@ -23,6 +23,8 @@ import { DialogSearchComponent } from './dialog-search/dialog-search.component';
 import { JobLandingComponent } from './job-landing/job-landing.component';
 import { AdminGuard } from './core/admin.guard';
 import { AdminComponent } from './admin/admin.component';
+import { FacultyGuard } from './core/faculty.guard';
+import { FacultyComponent } from './faculty/faculty.component';
 
 
 
@@ -36,7 +38,8 @@ import { AdminComponent } from './admin/admin.component';
     NavComponent,
     DialogSearchComponent,
     JobLandingComponent,
-    AdminComponent  
+    AdminComponent,
+    FacultyComponent  
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ import { AdminComponent } from './admin/admin.component';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService, AdminGuard],
+  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService, AdminGuard, FacultyGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogSearchComponent]
 })

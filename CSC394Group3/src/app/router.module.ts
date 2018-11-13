@@ -9,6 +9,10 @@ import { UserResolver } from './user/user.resolver';
 import { AuthGuard } from './core/auth.guard';
 import { JobLandingComponent } from './job-landing/job-landing.component'
 import { AdminGuard } from './core/admin.guard';
+import { FacultyGuard } from './core/faculty.guard';
+import { FacultyComponent } from './faculty/faculty.component';
+
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,7 +20,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponent,  resolve: { data: UserResolver}},
   { path: 'jobLanding', component: JobLandingComponent,  resolve: { data: UserResolver}},
-  { path: 'admin', component: AdminComponent,  resolve: { data: UserResolver}, canActivate: [AdminGuard] } 
+  { path: 'admin', component: AdminComponent,  resolve: { data: UserResolver}, canActivate: [AdminGuard] },
+  { path: 'faculty', component: FacultyComponent,  resolve: { data: UserResolver}, canActivate: [FacultyGuard] } 
 ];
 
 @NgModule({
