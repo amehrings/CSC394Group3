@@ -20,7 +20,7 @@ import { DialogSearchComponent } from '../dialog-search/dialog-search.component'
 
 export class UserComponent implements OnInit{
 
-  
+
   dbSkills: any[];
   dbSkillsRating: any[];
   dbMap: Map<String, any>;
@@ -46,7 +46,6 @@ export class UserComponent implements OnInit{
       let data = routeData['data'];
       if (data) {
         this.user = data;
-        //this.dbSkills = this.getUserSkills()
         this.createForm(this.user.name);
       }
     });
@@ -58,7 +57,7 @@ export class UserComponent implements OnInit{
     console.log(this.userService.getCurrentUser());
 
   }
-  
+
   getUserSkills(): any[] {
     const firestore = firebase.firestore();
     firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(doc => {
@@ -130,14 +129,14 @@ export class UserComponent implements OnInit{
     }
   }
   starHandler(skill: String, num: Number){
-    var skillsUpdate={};
-    skillsUpdate['skillsMap.'+skill.toLowerCase()] = num;
+    var skillsUpdate = {};
+    skillsUpdate['skillsMap.'+ skill.toLowerCase()] = num;
     this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
     this.getUserSkills();
   }
 
   starCheck(skill: String){
-    return this.dbMap.get(skill)
+    return this.dbMap.get(skill);
     // if (this.dbMap.get(skill) !=)
   }
 
