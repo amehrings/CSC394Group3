@@ -106,6 +106,7 @@ export class JobLandingComponent implements OnInit {
     if(option.isUserInput && this.jobs.includes(option.source.value)){
       this.getNewJobSkills(option.source.value)
     }
+    this.degreeMatches.sort(this.Comparator);
   }
 
   //Degree to Jobs
