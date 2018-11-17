@@ -5,24 +5,46 @@
 <div class="signin-content">
 <mat-card>
   <mat-card-content>
+
+    <!-- register form -->
     <form [formGroup]="registerForm">
       <mat-card-title>Register here</mat-card-title>
+
+      <!-- First Name -->
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="First Name" formControlName="fName" required>
+      </mat-form-field>
+
+      <!-- Last Name -->
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Last Name" formControlName="lName" required>
+      </mat-form-field>
+
+      <!-- email -->
       <mat-form-field class="full-width-input">
         <input matInput placeholder="email" formControlName="email" required>
       </mat-form-field>
 
+      <!-- password -->
       <mat-form-field class="full-width-input">
         <input matInput type="password" placeholder="password" formControlName="password" required>
         <label class="mat-error">{{errorMessage}}</label>
       </mat-form-field>
+
+      <!-- choose degree -->
+      <mat-form-field>
+        <mat-select placeholder="Degree" formControlName="degree">
+          <mat-option *ngFor="let item of degrees" value = {{item}}>
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <br>
+
+      <!-- register button -->
       <button mat-raised-button color="primary" type="submit" (click)="tryRegister(registerForm.value)">Sign up</button>
       <p>Already have an account? <a href="/login">login</a></p>
-
-      <ul>
-        <li *ngFor="let item of degrees">
-          <input type="radio" formControlName="degree" value={{item}}> {{item}}
-        </li>
-      </ul>
     </form>
   </mat-card-content>
 </mat-card>
