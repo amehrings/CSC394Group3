@@ -26,21 +26,21 @@ export class NavComponent implements OnInit {
     public authService: AuthService,
     private location: Location,
     private afs: AngularFirestore
-) { 
+) {
 }
 
-getMap(map){
-  return new Map(Object.entries(map))
+getMap(map) {
+  return new Map(Object.entries(map));
 }
 
 isAdmin(): Map<String, any>{
  const firestore = firebase.firestore();
  firestore.collection('/users').doc(firebase.auth().currentUser.uid).get().then(doc => {
   this.rolesMap = this.getMap(doc.data().roles)
-  console.log(this.rolesMap)
+  console.log(this.rolesMap);
  })
 
- return new Map()
+ return new Map();
 }
 
 logout(){
@@ -48,18 +48,18 @@ logout(){
     .then((res) => {
       this.location.back();
     }, (error) => {
-      console.log("Logout error", error);
+      console.log('Logout error', error);
     });
 }
 
-delete(){
+delete() {
   this.authService.doDelete()
     .then((res) => {
     }, (error) => {
-      console.log("Delete error", error);
+      console.log('Delete error', error);
     });
 }
-  ngOnInit() {    
-  }
+
+  ngOnInit() {}
 
 }
