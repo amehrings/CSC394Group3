@@ -53,6 +53,19 @@ export class AuthService {
     });
   }
 
+  doDelete(){
+    return new Promise((resolve, reject) => {
+      if(firebase.auth().currentUser){
+        firebase.auth().currentUser.delete();
+        resolve();
+      }
+      else{
+        reject();
+      }
+    });
+
+  }
+
   
   updateUserData(userEmail:string = '', userId: string = '', userDegree = '', userConcentration = '', isStudent: boolean = true, isFaculty: boolean = false, isAdmin: boolean = false, userSkills = {}, userJobs = {}){
     const user: User = {

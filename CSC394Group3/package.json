@@ -30,6 +30,7 @@
     "angularfire2": "^5.0.1",
     "core-js": "^2.4.1",
     "firebase": "^5.5.0",
+    "firebase-admin": "^6.1.0",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "rxjs": "^6.3.2",

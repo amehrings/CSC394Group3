@@ -51,6 +51,14 @@ logout(){
       console.log("Logout error", error);
     });
 }
+
+delete(){
+  this.authService.doDelete()
+    .then((res) => {
+    }, (error) => {
+      console.log("Delete error", error);
+    });
+}
   ngOnInit() {    
   }
 
