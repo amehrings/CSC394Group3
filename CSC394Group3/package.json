@@ -28,6 +28,7 @@
     "@fortawesome/angular-fontawesome": "^0.2.1",
     "angular-font-awesome": "^3.1.2",
     "angularfire2": "^5.0.1",
+    "chart.js": "^2.7.3",
     "core-js": "^2.4.1",
     "firebase": "^5.5.0",
     "firebase-admin": "^6.1.0",

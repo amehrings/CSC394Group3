@@ -1,0 +1,22 @@
+.frequencyChart{
+    border-radius: 25px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    width: 650px;
+    text-align: center;
+    border-color: darkgray;
+    background: rgba(219, 219, 219, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h2Text{
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.wrapper{
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+}

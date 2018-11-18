@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit{
 
    ngOnInit(){
      this.db.collection<any>('/degrees', ref => ref).get().subscribe((degrees) => {console.log(degrees);
-     this.degrees = Array(20);
+     this.degrees = Array(14);
        this.tempDegrees = degrees;
        console.log(this.tempDegrees);
        for(let i = 0; i < this.tempDegrees.docs.length; i++){
