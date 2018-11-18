@@ -1,8 +1,28 @@
 <div class="wrapper">
-  <div class= "frequencyChart">
-    <div class="chartSize">
-      <h2 class="h2Text">User Skills Frequency Chart</h2>
-      <canvas width="500" height="500" id="myChart"></canvas>
+    <div class= "frequencyChart">
+      <div class="chartSize">
+        <h2 class="h2Text">User Skills Frequency Chart</h2>
+        <canvas width="500" height="500" id="myChart"></canvas>
+      </div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            Top 10 Most Frequent Skills
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list>
+            <div *ngFor= "let values of result">
+                <mat-list-item class="row">
+                  <div class="column">{{values[0]}}</div>
+                  <div class="column1">{{values[1]}}</div>
+                </mat-list-item>
+            </div>
+          </mat-list>
+      </mat-expansion-panel>
+      
     </div>
   </div>
-</div>
+
+ 
+  
+

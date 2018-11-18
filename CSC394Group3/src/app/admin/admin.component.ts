@@ -15,7 +15,9 @@ export class AdminComponent implements OnInit {
   dbSkillsMap: Map<string, {}> = new Map();
   dbSkillsNames = [];
   dbSkillsFrequency = [];
-
+  topValuesNames: any[];
+  topValues: any[] = [];
+  result: any[] = [];
 
   constructor(public afs: AngularFirestore) {
   }
@@ -26,7 +28,23 @@ export class AdminComponent implements OnInit {
       this.dbSkillsMap = this.getMap(doc["skillsFrequency"])
       this.dbSkillsNames = this.getKeys(doc["skillsFrequency"])
       this.dbSkillsFrequency = this.getValues(doc["skillsFrequency"])
-  
+      this.topValues = this.getValues(doc["skillsFrequency"]).sort((a,b) => b - a).slice(0,10);
+      // console.log(this.topValues)
+      this.topValuesNames = []
+
+      this.result = [];
+      for (let i = 0; i < this.topValues.length; i++){
+            if(!this.topValuesNames.includes(Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]))){
+              this.topValuesNames.push(Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]))
+              this.result.push([Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]), this.topValues[i]])
+            }else{
+              // console.log(Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]))
+            }
+      }
+      // console.log(this.result)
+      // console.log(this.topValuesNames)
+
+
       var canvas = <HTMLCanvasElement>document.getElementById("myChart");
       var ctx = canvas.getContext("2d");
       if(count <= 0){
@@ -51,6 +69,8 @@ export class AdminComponent implements OnInit {
         });
         count++;
       }
+
+
     })
   }
 
@@ -101,6 +121,9 @@ export class AdminComponent implements OnInit {
     return new Map(Object.entries(map))
   }
 
+  getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+  }
 
   getSkillsFrequenciesCollection(){
     var temp = this.afs.collection('/stats').doc("Skill Frequency").valueChanges();
