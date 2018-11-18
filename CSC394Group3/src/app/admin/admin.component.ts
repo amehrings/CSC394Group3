@@ -18,12 +18,14 @@ export class AdminComponent implements OnInit {
   topValuesNames: any[];
   topValues: any[] = [];
   result: any[] = [];
+  degrees= [];
 
   constructor(public afs: AngularFirestore) {
   }
 
   ngOnInit() {
     var count= 0;
+    var degreeCount=0;
     this.getSkillsFrequenciesCollection().subscribe(doc =>{
       this.dbSkillsMap = this.getMap(doc["skillsFrequency"])
       this.dbSkillsNames = this.getKeys(doc["skillsFrequency"])
@@ -45,6 +47,8 @@ export class AdminComponent implements OnInit {
       // console.log(this.topValuesNames)
 
 
+
+      //CHART
       var canvas = <HTMLCanvasElement>document.getElementById("myChart");
       var ctx = canvas.getContext("2d");
       if(count <= 0){
@@ -64,14 +68,79 @@ export class AdminComponent implements OnInit {
             legend: {
               display: false
           },
-          responsive: false
+          responsive: true
           }
         });
         count++;
       }
-
-
     })
+
+
+    this.getUserInfo().subscribe(doc =>{
+      this.degrees = this.getDegrees(doc)
+      
+      //CHART
+      var canvas = <HTMLCanvasElement>document.getElementById("degreeChart");
+      var ctx = canvas.getContext("2d");
+      if(degreeCount <= 0){
+        this.chart = new Chart(ctx,{
+          type: 'horizontalBar',
+          data: {
+              labels: this.degrees[0],
+              datasets: [{
+                  data: this.degrees[1],
+                  backgroundColor: this.randomColorFill(this.degrees[0].length),
+                  borderColor: this.randomColorBorder(this.degrees[0].length),
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            legend: {
+              display: false
+             },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:true
+                      }
+                  }],
+                  xAxes: [{
+                    ticks: {
+                      autoSkip: false,
+                      beginAtZero: true
+                      //fontSize: 20
+                    }
+                  }]
+              }
+          },
+          responsive: true
+        });
+        degreeCount++;
+      }
+    })
+  }
+  
+  getDegrees(oldArr){
+    var a = [], b = [], prev;
+    var arr = []
+
+    for(let i=0; i <oldArr.length; i++){
+        arr.push(oldArr[i].degree)
+    }
+    arr.sort();
+    for ( var i = 0; i < arr.length; i++ ) {
+        if ( arr[i] !== prev ) {
+            a.push(arr[i]);
+            b.push(1);
+        } else {
+            b[b.length-1]++;
+        }
+        prev = arr[i];
+    }
+    console.log(a)
+    console.log(b)
+
+    return [a, b];
   }
 
   randomColorFill(length): any[] {
@@ -127,6 +196,11 @@ export class AdminComponent implements OnInit {
 
   getSkillsFrequenciesCollection(){
     var temp = this.afs.collection('/stats').doc("Skill Frequency").valueChanges();
+    return temp;
+  }
+
+  getUserInfo(){
+    var temp = this.afs.collection('/users').valueChanges();
     return temp;
   }
 }
