@@ -1,7 +1,7 @@
 
-
 <div class="wrapper">
-<mat-expansion-panel  [expanded]="true">
+<!-- <mat-expansion-panel  [expanded]="true"> -->
+<mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Admin Analytics
@@ -39,11 +39,43 @@
       </div>
     </div>
   </div>
-
   </mat-expansion-panel>
 </div>
 
 
- 
+<div class="myTable">
+    <mat-table #table [dataSource]="dataSource" matSort>
+  
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.position}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.name}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="degree">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Degree </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.degree}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="uid">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+          <mat-cell *matCellDef="let user"> {{user.uid}} </mat-cell>
+        </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+
   
 

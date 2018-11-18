@@ -1,7 +1,17 @@
 import { Chart } from 'chart.js';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { MatTableDataSource, MatSort } from '@angular/material';
+
+
+export interface UserObj {
+  name: string;
+  position: number;
+  email: string;
+  degree: string;
+  uid: string;
+}
 
 @Component({
   selector: 'app-faculty',
@@ -9,6 +19,12 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
   styleUrls: ['./faculty.component.scss']
 })
 export class FacultyComponent implements OnInit {
+  displayedColumns = ['position', 'name', 'email', 'degree', 'uid'];
+  userData: UserObj[] = [
+    //{name:"a", position:1, email:"b", degree:"c", uid:"d"}
+  ];
+  dataSource = new MatTableDataSource(this.userData);
+  @ViewChild(MatSort) sort: MatSort;
 
   chart = [];
   dbSkillsMap: Map<string, {}> = new Map();
@@ -20,6 +36,10 @@ export class FacultyComponent implements OnInit {
   degrees= [];
 
   constructor(public afs: AngularFirestore) {
+  }
+
+  ngAfterViewInit(){
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit() {
@@ -77,6 +97,12 @@ export class FacultyComponent implements OnInit {
 
     this.getUserInfo().subscribe(doc =>{
       this.degrees = this.getDegrees(doc)
+      for(let i=0; i < doc.length; i++){
+        const data = this.dataSource.data
+        data.push(this.updateUserObject(doc[i], i+1))
+        this.dataSource.data = data;
+      }
+      //Table
       
       //CHART
       var canvas = <HTMLCanvasElement>document.getElementById("degreeChart");
@@ -118,6 +144,17 @@ export class FacultyComponent implements OnInit {
       }
     })
   }
+
+  updateUserObject(doc, num){
+    const user: UserObj = {
+      name: doc.fName+" "+doc.lName,
+      email: doc.email,
+      position: num,
+      degree: doc.degree,
+      uid: doc.userId
+    };
+    return user
+  }
   
   getDegrees(oldArr){
     var a = [], b = [], prev;
@@ -136,8 +173,6 @@ export class FacultyComponent implements OnInit {
         }
         prev = arr[i];
     }
-    console.log(a)
-    console.log(b)
 
     return [a, b];
   }
@@ -202,6 +237,4 @@ export class FacultyComponent implements OnInit {
     var temp = this.afs.collection('/users').valueChanges();
     return temp;
   }
-}
-
 }

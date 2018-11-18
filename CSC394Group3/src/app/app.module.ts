@@ -25,6 +25,8 @@ import { AdminGuard } from './core/admin.guard';
 import { AdminComponent } from './admin/admin.component';
 import { FacultyGuard } from './core/faculty.guard';
 import { FacultyComponent } from './faculty/faculty.component';
+import { MatSortModule } from '@angular/material';
+import { MatTableModule } from '@angular/material';
 
 
 
@@ -50,7 +52,9 @@ import { FacultyComponent } from './faculty/faculty.component';
     FormsModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService, AdminGuard, FacultyGuard],
   bootstrap: [AppComponent],
