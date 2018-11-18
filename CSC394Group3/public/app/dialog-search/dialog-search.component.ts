@@ -68,10 +68,18 @@ export class DialogSearchComponent implements OnInit{
   }
 
   selectionChange(option: MatListOption) {
-    if(option.selected == true){     
+    if(option.selected == true){
+      console.log(option.value)     
       var skillsUpdate={};
+      var skillsFrequencyUpdate={}
+
       skillsUpdate['skillsMap.'+option.value.toLowerCase()] = 0;
+      
+      skillsFrequencyUpdate['skillsFrequency.'+option.value.toLowerCase()]++;
+
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
+      this.afs.collection('stats').doc("Skill Frequency").update(skillsFrequencyUpdate);
+
       //this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
     }    
   }
@@ -157,10 +165,13 @@ export class DialogSearchComponent implements OnInit{
       const array = this.dbCourseMap.get(option.value)
       const iterator = Object.values(array);
       var skillsUpdate={}
+      var skillsFrequencyUpdate={}
       for (const value of iterator){
         console.log(String(value).toLowerCase())
         skillsUpdate['skillsMap.'+(String(value).toLowerCase())] =0;
+        skillsFrequencyUpdate['skillsFrequency.'+(String(value).toLowerCase())]++;
         this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
+        this.afs.collection('stats').doc("Skill Frequency").update(skillsFrequencyUpdate);
       }
     }
   }  

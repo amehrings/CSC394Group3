@@ -33,6 +33,7 @@ export class DialogSearchComponent implements OnInit{
   courses: any[];
   concentrations: any[];
   dbCourseMap: Map<string, {}>;
+  mapSkillsCheck: Map<string, {}> = new Map();
   @ViewChild('stepper') stepper: MatStepper;
   isSelected: number= 0;
   dbCourseSkills: Map<any,any>;
@@ -70,9 +71,20 @@ export class DialogSearchComponent implements OnInit{
   selectionChange(option: MatListOption) {
     if(option.selected == true){     
       var skillsUpdate={};
+      var skillsFrequencyUpdate={};
       skillsUpdate['skillsMap.'+option.value.toLowerCase()] = 0;
+
+      
       this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate)
-      //this.afs.collection('users').doc(firebase.auth().currentUser.uid).update({skills: firebase.firestore.FieldValue.arrayUnion(option.value)});
+
+      firebase.firestore().collection("stats").doc('Skill Frequency').get().then((snapshot) => {
+        this.mapSkillsCheck= this.getMap(snapshot.data()['skillsFrequency'])
+        var temp = <number> this.mapSkillsCheck.get(option.value.toLowerCase())
+        skillsFrequencyUpdate['skillsFrequency.'+option.value.toLowerCase()]= temp+1;
+        this.afs.collection('stats').doc("Skill Frequency").update(skillsFrequencyUpdate);
+      })
+
+      
     }    
   }
 
@@ -157,10 +169,19 @@ export class DialogSearchComponent implements OnInit{
       const array = this.dbCourseMap.get(option.value)
       const iterator = Object.values(array);
       var skillsUpdate={}
+      var skillsFrequencyUpdate={};
+
       for (const value of iterator){
         console.log(String(value).toLowerCase())
         skillsUpdate['skillsMap.'+(String(value).toLowerCase())] =0;
         this.afs.collection('users').doc(firebase.auth().currentUser.uid).update(skillsUpdate);
+
+        firebase.firestore().collection("stats").doc('Skill Frequency').get().then((snapshot) => {
+          this.mapSkillsCheck= this.getMap(snapshot.data()['skillsFrequency'])
+          var temp = <number> this.mapSkillsCheck.get((String(value).toLowerCase()))
+          skillsFrequencyUpdate['skillsFrequency.'+(String(value).toLowerCase())]= temp+1;
+          this.afs.collection('stats').doc("Skill Frequency").update(skillsFrequencyUpdate);
+        })
       }
     }
   }  
@@ -187,6 +208,7 @@ export class DialogSearchComponent implements OnInit{
           this.concentrations = this.getKeys(this.getMap(doc.data()))
           this.courses = this.getValues(this.getMap(doc.data()))
           this.dbCourseMap = this.getMap(doc.data())
+          console.log(this.dbCourseMap)
         }
 
         if (typeof(this.concentrations) == 'undefined' || this.concentrations.length == 0){
