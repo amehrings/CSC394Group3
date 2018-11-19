@@ -1,7 +1,7 @@
 <div class="skillSearch">
   <mat-tab-group class="tabs">
     <mat-tab label="Skills" class="skillsTab">
-      <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
+      <input class="searchBar" type="text" (keyup)="search($event)" placeholder="Search for skills...">
       <mat-selection-list #list (selectionChange)="selectionChange($event.option)" class="scrollable">
         <mat-list-option *ngFor="let skill of searchSkills" [value]="skill">
           {{skill.toLowerCase()}}
@@ -12,7 +12,7 @@
     
     <mat-tab label="Classes" class="classesTab">
       <mat-horizontal-stepper #stepper>
-        <mat-step [stepControl]="firstFormGroup">
+        <mat-step>
           <ng-template matStepLabel>Degrees</ng-template>
           <mat-selection-list #list class="scrollable" (selectionChange)="loadDocs($event.option)">
             <mat-list-option [value]="degree" *ngFor="let degree of degrees">
@@ -20,7 +20,7 @@
             </mat-list-option>
           </mat-selection-list>
         </mat-step>
-        <mat-step [stepControl]="secondFormGroup">
+        <mat-step>
             <ng-template matStepLabel>Concentrations</ng-template>
             <mat-selection-list #list class="scrollable" (selectionChange)="getCourses($event.option)">
                 <mat-list-option *ngFor="let concentration of concentrations" [value] = "concentration">
@@ -32,7 +32,7 @@
                 <button mat-button matStepperNext>Next</button>
               </div> -->
           </mat-step>
-          <mat-step [stepControl]="thirdFormGroup">
+          <mat-step>
             <ng-template matStepLabel>Courses</ng-template>
             <mat-selection-list #list class="scrollable" (selectionChange)="courseSelection($event.option)">
                 <!-- <mat-list-option *ngFor="let skill of searchSkills | slice:0:15" [value] = "skill"> -->

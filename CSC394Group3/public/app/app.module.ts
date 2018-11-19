@@ -21,6 +21,12 @@ import { NavComponent } from './nav/nav.component';
 import { skillsSearchService } from './skills-search.service';
 import { DialogSearchComponent } from './dialog-search/dialog-search.component';
 import { JobLandingComponent } from './job-landing/job-landing.component';
+import { AdminGuard } from './core/admin.guard';
+import { AdminComponent } from './admin/admin.component';
+import { FacultyGuard } from './core/faculty.guard';
+import { FacultyComponent } from './faculty/faculty.component';
+import { MatSortModule } from '@angular/material';
+import { MatTableModule } from '@angular/material';
 
 
 
@@ -33,7 +39,9 @@ import { JobLandingComponent } from './job-landing/job-landing.component';
     UserComponent,
     NavComponent,
     DialogSearchComponent,
-    JobLandingComponent  
+    JobLandingComponent,
+    AdminComponent,
+    FacultyComponent  
   ],
   imports: [
     BrowserModule,
@@ -44,9 +52,11 @@ import { JobLandingComponent } from './job-landing/job-landing.component';
     FormsModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    MatSortModule,
+    MatTableModule
   ],
-  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService],
+  providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService, AdminGuard, FacultyGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogSearchComponent]
 })

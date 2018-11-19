@@ -6,6 +6,8 @@ export interface Roles {
 
 export interface User {
     userId: string;
+    fName: string;
+    lName: string;
     email: string;
     roles: Roles;
     concentration: string;

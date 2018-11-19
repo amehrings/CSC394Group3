@@ -13,10 +13,10 @@ import { Router } from '@angular/router';
 export class AuthService {
   user$: Observable<User>;
 
-  constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore, public router: Router) {                 
+  constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore, public router: Router) {
     this.user$ = this.afAuth.authState.pipe(switchMap(user => {
       if(user){
-        return this.afs.doc<User>('users/${user.userId').valueChanges()
+        return this.afs.collection('users').doc(firebase.auth().currentUser.uid).valueChanges()
       } else{
         return observableOf(null)
       }
@@ -53,10 +53,25 @@ export class AuthService {
     });
   }
 
-  
-  updateUserData(userEmail:string = '', userId: string = '', userDegree = '', userConcentration = '', isStudent: boolean = true, isFaculty: boolean = false, isAdmin: boolean = false, userSkills = {}, userJobs = {}){
+  doDelete(){
+    return new Promise((resolve, reject) => {
+      if(firebase.auth().currentUser){
+        firebase.auth().currentUser.delete();
+        resolve();
+      }
+      else{
+        reject();
+      }
+    });
+
+  }
+
+
+  updateUserData(userEmail: string = '', userId: string = '', userDegree = '', firstName: string = '', lastName: string = '', userConcentration = '', isStudent: boolean = true, isFaculty: boolean = false, isAdmin: boolean = false, userSkills = {}, userJobs = {}){
     const user: User = {
       userId: userId,
+      fName: firstName,
+      lName: lastName,
       email: userEmail,
       roles: {
         student: isStudent,
@@ -75,7 +90,7 @@ export class AuthService {
     /*var data = {
       skills: []
     };*/
-    
+
     // this.afs.collection('skills').doc('myskills').set(data);
 
     return userRef.set(userData, { merge: true})
