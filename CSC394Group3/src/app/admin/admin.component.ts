@@ -31,9 +31,10 @@ export class AdminComponent implements OnInit {
   dbSkillsMap: Map<string, {}> = new Map();
   dbSkillsNames = [];
   dbSkillsFrequency = [];
-  topValuesNames: any[];
+  topValuesNames: any[] = [];
   topValues: any[] = [];
-  result: any[] = [];
+  objectResult;
+  result = [];
   degrees= [];
 
   constructor(public afs: AngularFirestore) {
@@ -50,23 +51,22 @@ export class AdminComponent implements OnInit {
       this.dbSkillsMap = this.getMap(doc["skillsFrequency"])
       this.dbSkillsNames = this.getKeys(doc["skillsFrequency"])
       this.dbSkillsFrequency = this.getValues(doc["skillsFrequency"])
-      this.topValues = this.getValues(doc["skillsFrequency"]).sort((a,b) => b - a).slice(0,10);
-      // console.log(this.topValues)
-      this.topValuesNames = []
 
-      this.result = [];
-      for (let i = 0; i < this.topValues.length; i++){
-            if(!this.topValuesNames.includes(Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]))){
-              this.topValuesNames.push(Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]))
-              this.result.push([Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]), this.topValues[i]])
-            }else{
-              // console.log(Object.keys(doc["skillsFrequency"]).find(key => doc["skillsFrequency"][key] === this.topValues[i]))
-            }
+      var props = Object.keys(doc['skillsFrequency']).map(function(key) {
+        return {key: key, value: this[key]};
+      }, doc['skillsFrequency']);
+
+      props.sort(function(p1,p2) {return p2.value - p1.value; });
+      this.objectResult = props.slice(0,10);
+
+      for (let i = 0; i< this.objectResult.length; i++){
+        this.topValuesNames.push(this.objectResult[i].key)
+        this.topValues.push(this.objectResult[i].value)
       }
-      // console.log(this.result)
-      // console.log(this.topValuesNames)
 
-
+      for(let i= 0; i< this.objectResult.length; i++){
+        this.result.push([this.topValuesNames[i], this.topValues[i]])
+      }
 
       //CHART
       var canvas = <HTMLCanvasElement>document.getElementById("myChart");

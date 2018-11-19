@@ -27,6 +27,7 @@ import { FacultyGuard } from './core/faculty.guard';
 import { FacultyComponent } from './faculty/faculty.component';
 import { MatSortModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 
 
@@ -41,7 +42,8 @@ import { MatTableModule } from '@angular/material';
     DialogSearchComponent,
     JobLandingComponent,
     AdminComponent,
-    FacultyComponent  
+    FacultyComponent,
+    ConfirmDialogComponent  
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,6 @@ import { MatTableModule } from '@angular/material';
   ],
   providers: [AngularFirestore, AuthService, UserService, UserResolver, AuthGuard, skillsSearchService, AdminGuard, FacultyGuard],
   bootstrap: [AppComponent],
-  entryComponents: [DialogSearchComponent]
+  entryComponents: [DialogSearchComponent, ConfirmDialogComponent]
 })
 export class AppModule { }
