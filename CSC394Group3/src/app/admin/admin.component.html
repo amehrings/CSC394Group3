@@ -44,6 +44,21 @@
     </div>
   </div>
   </mat-expansion-panel>
+
+
+  <mat-expansion-panel class="addSkill">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add Skill to Database
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="searchBarCenter">
+        <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
+        <button class="searchBarButton" mat-raised-button>Add</button>
+      </div>
+  </mat-expansion-panel>
+
+
 </div>
 
 
