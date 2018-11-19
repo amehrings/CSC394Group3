@@ -1,0 +1,94 @@
+.frequencyChart{
+    border-radius: 25px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    width: 550px;
+    height: 650px;
+    border-color: darkgrey;
+    border-style: solid;
+    border-width: 1px;
+    background: rgba(219, 219, 219, 0.5);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 25px;
+
+}
+
+.degreeChart{
+    border-radius: 25px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    width: 800px;
+    height: 650px;
+    border-color: darkgrey;
+    border-style: solid;
+    border-width: 1px;
+    background: rgba(219, 219, 219, 0.5);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-bottom: 25px;
+
+}
+
+.h2Text{
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    text-align: center;
+}
+
+.wrapper{
+    justify-content: center;
+    margin-top: 2%;
+    display: flex;
+
+}
+
+.chartSize{
+    padding-bottom: 20px;
+}
+
+.chartSizeDegrees{
+    //padding-top: 15px;
+}
+
+.row{
+    display: flex;
+    width: auto;
+    align-items: center;
+    margin-bottom: 3px;
+  }
+
+.column {
+    flex: 80%;
+    font-size: 12px;
+}
+
+.column1{
+    flex: 20%;
+    padding: 5px;
+    text-align: center;
+    background-color: rgba(138, 138, 138, 0.281);
+    
+}
+
+#myChart, #degreeChart{
+    padding-top: 20px;
+}
+
+mat-expansion-panel {
+    width: 80%;
+}
+
+.expansion{
+    justify-content: center;
+    display: flex;
+}
+
+.myTable{
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 50px;
+    margin-bottom: 5%;
+}

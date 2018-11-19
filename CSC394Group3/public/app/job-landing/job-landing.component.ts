@@ -106,6 +106,7 @@ export class JobLandingComponent implements OnInit {
     if(option.isUserInput && this.jobs.includes(option.source.value)){
       this.getNewJobSkills(option.source.value)
     }
+    this.degreeMatches.sort(this.Comparator);
   }
 
   //Degree to Jobs
@@ -182,7 +183,7 @@ export class JobLandingComponent implements OnInit {
         this.mapTools(this.getMap(doc.data()), doc.id)
       })
     })
-    console.log(this.finalDegreeSkills)
+    //console.log(this.finalDegreeSkills)
   }
 
   objectParse(map){
@@ -198,18 +199,18 @@ export class JobLandingComponent implements OnInit {
   }
 
   mapTools(map, id){
-    // if(id === "Cybersecurity"){
-    //   var finalSkills = this.objectParse(map)
-    //   var objFirst = Object.entries(Array.from(map.values()))[4]
-    //   try{
-    //     var objSecond = objFirst[1]
-    //     var finalMap = new Map(Object.entries(objSecond))
-    //     var merged = [].concat.apply([], Array.from(finalMap.values()))
-    //     this.finalDegreeSkills.push(this.removeDuplicates(merged))
-    //   }catch (e){
+    if(id === "Cybersecurity"){
+      var finalSkills = this.objectParse(map)
+      var objFirst = Object.entries(Array.from(map.values()))[4]
+      try{
+        var objSecond = objFirst[1]
+        var finalMap = new Map(Object.entries(objSecond))
+        var merged = [].concat.apply([], Array.from(finalMap.values()))
+        this.finalDegreeSkills.push(this.removeDuplicates(merged))
+      }catch (e){
 
-    //   }
-    // }
+      }
+    }
     //Temporary if because of multiple concentrations
     if(id === "Information_Systems" || id === "Software_Engineering"){
       var objFirst = Object.entries(Array.from(map.values()))[4]
