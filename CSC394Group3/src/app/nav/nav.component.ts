@@ -9,6 +9,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import { tap, map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import {MatDialog} from "@angular/material";
+import {DialogSearchComponent} from "../dialog-search/dialog-search.component";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 
 
 
@@ -25,6 +28,7 @@ export class NavComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private location: Location,
+    public dialog: MatDialog,
     private afs: AngularFirestore
 ) {
 }
@@ -53,11 +57,13 @@ logout(){
 }
 
 delete() {
-  this.authService.doDelete()
-    .then((res) => {
-    }, (error) => {
-      console.log('Delete error', error);
-    });
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '750px',
+    position: {top: '50px'}
+  });
+
+  dialogRef.afterClosed().subscribe(() => {
+  });
 }
 
   ngOnInit() {}
