@@ -26,6 +26,7 @@ export class AdminComponent implements OnInit {
   dataSource = new MatTableDataSource(this.userData);
   @ViewChild(MatSort) sort: MatSort;
 
+  skillResult="";
   chart = [];
   dbSkillsMap: Map<string, {}> = new Map();
   dbSkillsNames = [];
@@ -154,6 +155,15 @@ export class AdminComponent implements OnInit {
       uid: doc.userId
     };
     return user
+  }
+
+  addSkill($event) {
+    let q = $event.target.value
+    this.skillResult = q
+  }
+
+  getSkillResult(){
+    this.afs.collection('skills').doc('myskills').update({skills: firebase.firestore.FieldValue.arrayUnion(this.skillResult)});
   }
   
   getDegrees(oldArr){

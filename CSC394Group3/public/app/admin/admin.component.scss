@@ -42,7 +42,8 @@
     justify-content: center;
     margin-top: 2%;
     display: flex;
-
+    align-items: center;
+    flex-direction: column;
 }
 
 .chartSize{
@@ -55,7 +56,7 @@
 
 .row{
     display: flex;
-    width: auto;
+    width: 100%;
     align-items: center;
     margin-bottom: 3px;
   }
@@ -89,6 +90,33 @@ mat-expansion-panel {
 .myTable{
     margin-left: 5%;
     margin-right: 5%;
-    padding-top: 50px;
     margin-bottom: 5%;
+}
+
+.onTop{
+    position: relative;
+    z-index: 1000;
+}
+
+.searchBar{
+    flex: 80%;
+    border-radius: 15px;
+    border: 1px #000 solid;
+    padding: 10px;
+}
+
+.searchBarCenter{
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchBarButton{
+    flex: 10%;
+    margin-left: 10px;
+}
+
+.addSkill{
+    margin: 20px;
 }

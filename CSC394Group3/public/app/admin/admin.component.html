@@ -14,21 +14,25 @@
           <mat-divider></mat-divider>
           <canvas width="500" height="500" id="myChart"></canvas>
         </div>
-        <mat-expansion-panel>
+        <div class="onTop">
+        <mat-expansion-panel  style="width: 100%; margin: 0 auto; text-align: left">
           <mat-expansion-panel-header>
             <mat-panel-description>
-              Top 10 Most Frequent Skills
+              Most Frequent Skills
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-list>
               <div *ngFor= "let values of result">
-                  <mat-list-item class="row">
-                    <div class="column">{{values[0]}}</div>
-                    <div class="column1">{{values[1]}}</div>
+                  <mat-list-item>
+                    <div class="row">
+                      <div class="column">{{values[0]}}</div>
+                      <div class="column1">{{values[1]}}</div>
+                    </div>
                   </mat-list-item>
               </div>
             </mat-list>
         </mat-expansion-panel>
+      </div>
       </div>
   
     <div class="degreeChart">
@@ -40,6 +44,21 @@
     </div>
   </div>
   </mat-expansion-panel>
+
+
+  <mat-expansion-panel class="addSkill">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add Skill to Database
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="searchBarCenter">
+        <input class="searchBar" type="text" (keyup)="addSkill($event)" placeholder="Add skill...">
+        <button class="searchBarButton" mat-raised-button (click)="getSkillResult()">Add</button>
+      </div>
+  </mat-expansion-panel>
+
+
 </div>
 
 

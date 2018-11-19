@@ -55,7 +55,7 @@
 
 .row{
     display: flex;
-    width: auto;
+    width: 100%;
     align-items: center;
     margin-bottom: 3px;
   }
@@ -91,4 +91,9 @@ mat-expansion-panel {
     margin-right: 5%;
     padding-top: 50px;
     margin-bottom: 5%;
+}
+
+.onTop{
+    position: relative;
+    z-index: 1000;
 }
