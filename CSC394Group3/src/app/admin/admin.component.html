@@ -53,8 +53,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="searchBarCenter">
-        <input class="searchBar" type="text" [(ngModel)]="searchterm" (keyup)="search($event)" placeholder="Search for skills...">
-        <button class="searchBarButton" mat-raised-button>Add</button>
+        <input class="searchBar" type="text" (keyup)="addSkill($event)" placeholder="Add skill...">
+        <button class="searchBarButton" mat-raised-button (click)="getSkillResult()">Add</button>
       </div>
   </mat-expansion-panel>
 
