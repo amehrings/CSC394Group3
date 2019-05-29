@@ -25,3 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Accounts
+
+Admin Account- Username: thisisatest@test.com Password: password (I know. extremely secure admin account.)
+Student Account- Username: 123@45.com Password: password
+
+## Hosted Website
+
+gradproject-bdcb3.firebaseapp.com
+
